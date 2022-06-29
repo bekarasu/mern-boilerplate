@@ -1,0 +1,35 @@
+.wysiwyg-editor .MuiFormControl-root {
+  margin: 5px 0;
+}
+
+.multi-preview {
+  img {
+    width: 100px;
+    margin: 0 10px;
+  }
+}
+
+.ck-content {
+  min-height: 400px;
+  background: transparent !important;
+  max-width: 100%;
+}
+
+.ck-content * {
+  white-space: -moz-pre-wrap !important;
+  white-space: -pre-wrap !important;
+  white-space: -o-pre-wrap !important;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  white-space: -webkit-pre-wrap;
+  word-break: break-all !important;
+  white-space: normal !important;
+}
+
+.dark .ck-toolbar {
+  background: transparent !important;
+
+  .ck-button {
+    color: #eeeeee;
+  }
+}

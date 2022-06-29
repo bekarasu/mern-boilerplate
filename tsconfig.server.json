@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "outDir": "./dist/",
+    "module": "commonjs",
+    "target": "es6",
+    "lib": ["es2017", "dom"],
+    "strict": true,
+    "types": ["node", "express"]
+  },
+  "include": ["src/server/**/*", "@types/server/*.d.ts"]
+}
