@@ -24,9 +24,8 @@ class App extends React.Component<IAppProps, IAppState> {
           store.dispatch(login(res.data.data.user));
         }
       })
-      .then(() => {
-        this.setState({ authorizing: false });
-      });
+      .then(() => this.setState({ authorizing: false }))
+      .catch(() => this.setState({ authorizing: false }));
   }
 
   render() {
@@ -36,9 +35,7 @@ class App extends React.Component<IAppProps, IAppState> {
         {this.state.authorizing ? null : (
           <div className="min-vh-100 d-flex">
             {user == null ? <Redirect to="/" /> : null}
-            <Switch>
-              {user == null ? <Route exact path="/" component={LoginPage} /> : <Route exact path="/*" component={Authenticated} />}
-            </Switch>
+            <Switch>{user == null ? <Route exact path="/" component={LoginPage} /> : <Route exact path="/*" component={Authenticated} />}</Switch>
           </div>
         )}
       </>

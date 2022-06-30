@@ -22,22 +22,38 @@ axiosInstance.interceptors.response.use(
   },
 );
 
-class ApiRequest {
-  headers: { Authorization: string; 'Content-type'?: string };
-  constructor() {
-    this.headers = {
-      Authorization: 'Bearer ' + localStorage.getItem('admin:accessToken'),
-      'Content-type': 'multipart/form-data; boundary=' + Date.now(),
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem('admin:accessToken');
+
+    if (!accessToken) {
+      store.dispatch(logout());
+      return {
+        ...config,
+        cancelToken: new axios.CancelToken((cancel) => cancel(''))
+      };
+    }
+
+    return {
+      ...config,
+      headers: {
+        ...config.headers,
+        'Content-type': 'multipart/form-data; boundary=' + Date.now(),
+        authorization: `Bearer ${accessToken}`,
+      },
     };
-  }
+  },
+  (error) => Promise.reject(error),
+);
 
-  post = (url: string, body: object) => axiosInstance.post(adminApiURL + url, body, { headers: this.headers });
+class ApiRequest {
+  post = (url: string, body: object) => axiosInstance.post(adminApiURL + url, body);
 
-  put = (url: string, body: object) => axiosInstance.put(adminApiURL + url, body, { headers: this.headers });
+  put = (url: string, body: object) => axiosInstance.put(adminApiURL + url, body);
 
-  get = (url: string, params?: object) => axiosInstance.get(adminApiURL + url, { headers: this.headers, params });
+  get = (url: string, params?: object) => axiosInstance.get(adminApiURL + url, { params });
 
-  delete = (url: string, id = '') => axiosInstance.delete(adminApiURL + url + id, { headers: this.headers });
+  delete = (url: string, id = '') => axiosInstance.delete(adminApiURL + url + id);
 }
 
 export default ApiRequest;

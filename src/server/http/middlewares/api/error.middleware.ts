@@ -1,11 +1,12 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
 import { promisify } from 'util';
 import HttpException from '../../../exceptions/api/HTTPException';
 
 const unlinkAsync = promisify(fs.unlink);
 
-export const errorHandler = (error: HttpException, request: Request, response: Response): Express.Response => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const errorHandler = (error: HttpException, request: Request, response: Response, next: NextFunction): Express.Response => {
   const status = error.statusCode || 500;
   let message = '';
   let data = {};
@@ -31,5 +32,6 @@ export const errorHandler = (error: HttpException, request: Request, response: R
     status: status === 422 ? 'warning' : 'error',
     createdAt: new Date(),
   });
+
   return response.status(status).setMessage(message).customResponse(data);
 };

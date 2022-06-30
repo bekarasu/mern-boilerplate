@@ -23,7 +23,6 @@ export const Auth = (req: Request, response: Response, next: NextFunction) => {
   try {
     tokenVerified = jwt.verify(token, process.env.JWT_SECRET);
   } catch (err) {
-    console.log(err);
     return response.status(401).setMessage('Token Is Invalid').customResponse();
   }
 

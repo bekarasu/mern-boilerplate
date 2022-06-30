@@ -19,17 +19,12 @@ export default abstract class AbstractRepository<T extends Document> implements 
   ): Promise<Query<T[], T>> => {
     const query = this._model.find(where, select, options);
     if (limit !== null && offset !== null && !isNaN(limit) && !isNaN(offset)) query.limit(limit).skip(offset);
-    return await query.lean();
+    return query.lean();
   };
 
-  aggreate = async (params: IKeyableObject[]): Promise<Aggregate<any[]>> => {
-    return this._model.aggregate(params);
-  };
+  aggreate = async (params: IKeyableObject[]): Promise<Aggregate<any[]>> => this._model.aggregate(params);
 
-  find = async (where?: any, select?: any, options?: QueryOptions): Promise<Query<T | null, T>> => {
-    const item = await this._model.findOne(where, select, options).exec();
-    return item;
-  };
+  find = async (where?: any, select?: any, options?: QueryOptions): Promise<Query<T | null, T>> => this._model.findOne(where, select, options).lean();
 
   insert = async (newItem: object): Promise<T> => {
     const doc = new this._model(newItem);
@@ -80,7 +75,5 @@ export default abstract class AbstractRepository<T extends Document> implements 
     });
   };
 
-  isExists = async (filter: FilterQuery<T>): Promise<boolean> => {
-    return this._model.exists(filter);
-  };
+  isExists = async (filter: FilterQuery<T>): Promise<boolean> => this._model.exists(filter);
 }

@@ -14,6 +14,9 @@ import { errorHandler } from '../../http/middlewares/api/error.middleware';
 import { notFoundHandler } from '../../http/middlewares/api/notFound.middleware';
 import { restfulHandler } from '../../http/middlewares/api/restful.middleware';
 import '../../libraries/ApiResponse';
+
+export const adminApiRouter = express.Router();
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, path.join(fileSystem.imagesPath, 'uploads'));
@@ -22,6 +25,7 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname)); //Appending extension
   },
 });
+
 const upload = multer({
   storage: storage,
   fileFilter(req, file, cb) {
@@ -38,15 +42,7 @@ const upload = multer({
   },
 });
 
-/**
- * Router Definition
- */
-export const adminApiRouter = express.Router();
-
-/**
- * Middleware Setups
- */
-adminApiRouter.use(restfulHandler); // our api middleware
+adminApiRouter.use(restfulHandler);
 adminApiRouter.use(helmet());
 adminApiRouter.use(cors());
 adminApiRouter.use(bodyParser.json());
@@ -59,8 +55,6 @@ adminApiRouter.use(Auth);
 adminApiRouter.route('/uploadFile').post(upload.any(), FileController.uploadFile);
 
 adminApiRouter.route('/admin-menu').get(AdminMenuController.getList);
-/**
- * After Middleware
- */
+
 adminApiRouter.use(errorHandler);
 adminApiRouter.use(notFoundHandler);

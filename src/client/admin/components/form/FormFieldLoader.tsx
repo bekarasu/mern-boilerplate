@@ -11,12 +11,10 @@ import WYSIWYG from './WYSIWYG';
 
 class FormFieldLoader extends React.Component<IFormFieldLoaderProps> {
   render() {
-    let component = null; // component that will render
-    let children = null; // component children items
+    let component = null;
+    let children = null;
 
-    switch (
-      this.props.item.type // load the component by item type
-    ) {
+    switch (this.props.item.type) {
       case 'text':
       case 'number':
         component = CustomTextInput;

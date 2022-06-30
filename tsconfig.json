@@ -3,7 +3,8 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "suppressImplicitAnyIndexErrors": true,
-    "jsx": "react"
+    "jsx": "react",
+    "sourceMap": true,
   },
   "exclude": ["node_modules"]
 }

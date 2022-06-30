@@ -19,6 +19,7 @@ const serverConfig = () => {
     mode: webpackEnv,
     entry: './src/server/index.ts',
     watch: dotenv.parsed.NODE_ENV === 'local' || dotenv.parsed.NODE_ENV === 'development',
+    devtool: 'inline-source-map',
     target: 'node',
     node: {
       __filename: false,
@@ -87,9 +88,8 @@ const adminConfig = () => {
   return merge(clientConfig(), {
     entry: './src/client/admin/index.tsx',
     performance: {
-      // hints: false,
-      maxEntrypointSize: 1024000, // we can increase the size for admin
-      maxAssetSize: 1024000, // we can increase the size for admin
+      maxEntrypointSize: 1024000,
+      maxAssetSize: 1024000,
     },
     output: {
       filename: 'admin.js',
@@ -148,7 +148,5 @@ if (webpackEnv !== 'production') {
   cssConfig.module.rules[0].use.shift();
   cssConfig.plugins.shift();
 }
-
-console.log(adminCssConfig, appCssConfig, cssConfig);
 
 module.exports = [serverConfig, appConfig, adminConfig, merge(cssConfig, appCssConfig), merge(cssConfig, adminCssConfig)];

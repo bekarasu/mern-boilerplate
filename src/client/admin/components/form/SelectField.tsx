@@ -6,7 +6,7 @@ const SelectField = ({ input, label, children, ...custom }) => (
   <>
     <InputLabel htmlFor="color-native-simple">{label}</InputLabel>
     <Select {...input} {...custom}>
-      {custom.options.map((option, key) => {
+      {custom.options.map((option: { value: string | number; text: string }, key: string) => {
         return (
           <MenuItem key={key} value={option.value}>
             {option.text}

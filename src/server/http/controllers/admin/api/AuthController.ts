@@ -10,6 +10,7 @@ dotenv.config();
 
 class AuthController {
   service = new AdminUserRepository(AdminUser);
+
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       const adminUser = await this.service.find({ username: req.body.username });
@@ -58,6 +59,7 @@ class AuthController {
         response.status(200).setMessage('Authorized').customResponse({ user: decoded });
       }
     });
+
     return response;
   }
 }
