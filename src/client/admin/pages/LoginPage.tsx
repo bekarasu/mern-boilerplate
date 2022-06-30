@@ -9,9 +9,9 @@ import { trans } from '../../../shared/resources/lang/translate';
 import { adminApiURL } from '../../resources/strings/apiURL';
 import { login } from '../store/authenticate/actions';
 
-class LoginPage extends React.Component<null, ILoginPageState> {
-  constructor() {
-    super(null);
+class LoginPage extends React.Component<{}, ILoginPageState> {
+  constructor(props: {}) {
+    super(props);
     this.state = {
       username: '',
       password: '',
@@ -36,7 +36,7 @@ class LoginPage extends React.Component<null, ILoginPageState> {
 
   render() {
     return (
-      <Grid container direction="column" justify="center" alignItems="center">
+      <Grid container direction="column" justifyContent="center" alignItems="center">
         <TextField name="username" label={trans('forms.username')} value={this.state.username} onChange={this.setUsername} />
         <TextField name="password" label={trans('forms.password')} value={this.state.password} onChange={this.setPassword} type="password" />
         <StyledButton onClick={this.handleLogin.bind(this)}>{trans('forms.login')}</StyledButton>

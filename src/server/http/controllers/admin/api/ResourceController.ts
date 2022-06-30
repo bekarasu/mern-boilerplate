@@ -53,8 +53,6 @@ abstract class ResourceController {
       const validationError = validationResult(req);
       if (!validationError.isEmpty()) {
         const validation = validationError.mapped();
-        console.log(validation);
-
         const firstValidationMessage = validation[Object.keys(validation)[0]].msg;
         throw new HttpException(422, 'Validation Failed: ' + firstValidationMessage + ' in ' + validation[Object.keys(validation)[0]].param, {
           validation: validation,

@@ -16,10 +16,10 @@ class App extends React.Component<IAppProps, IAppState> {
     };
   }
   componentDidMount() {
-    const requester = new ApiRequest();
-    requester
+    const apiRequest = new ApiRequest();
+    apiRequest
       .get('auth-token')
-      .then((res: any) => {
+      .then((res) => {
         if (res.status === 200) {
           store.dispatch(login(res.data.data.user));
         }
@@ -30,13 +30,14 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 
   render() {
+    const { user } = this.props;
     return (
       <>
         {this.state.authorizing ? null : (
           <div className="min-vh-100 d-flex">
-            {this.props.user == null ? <Redirect to="/" /> : null}
+            {user == null ? <Redirect to="/" /> : null}
             <Switch>
-              {this.props.user == null ? <Route exact path="/" component={LoginPage} /> : <Route exact path="/*" component={Authenticated} />}
+              {user == null ? <Route exact path="/" component={LoginPage} /> : <Route exact path="/*" component={Authenticated} />}
             </Switch>
           </div>
         )}

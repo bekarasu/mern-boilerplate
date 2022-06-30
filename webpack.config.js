@@ -5,7 +5,7 @@ const nodeExternals = require('webpack-node-externals');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-var dotenv = require('dotenv').config(); // read the .env file
+var dotenv = require('dotenv').config();
 
 if (dotenv.parsed == null) {
   console.log('\n\x1b[37m\x1b[41m%s\x1b[0m', 'Set .env file first', '\n');
@@ -14,11 +14,11 @@ if (dotenv.parsed == null) {
 
 const webpackEnv = dotenv.parsed.NODE_ENV === 'production' ? 'production' : 'development';
 
-const serverConfig = function () {
+const serverConfig = () => {
   return {
     mode: webpackEnv,
     entry: './src/server/index.ts',
-    watch: dotenv.parsed.NODE_ENV === 'local',
+    watch: dotenv.parsed.NODE_ENV === 'local' || dotenv.parsed.NODE_ENV === 'development',
     target: 'node',
     node: {
       __filename: false,
@@ -39,7 +39,7 @@ const serverConfig = function () {
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
     },
-    externals: [nodeExternals()], // disable the node_modules imports
+    externals: [nodeExternals()],
     output: {
       path: path.join(__dirname, 'dist'),
       filename: 'server.js',
@@ -47,7 +47,7 @@ const serverConfig = function () {
   };
 };
 
-const clientConfig = function (env) {
+const clientConfig = () => {
   return {
     mode: webpackEnv,
     module: {
@@ -73,7 +73,7 @@ const clientConfig = function (env) {
   };
 };
 
-const appConfig = function () {
+const appConfig = () => {
   return merge(clientConfig(), {
     entry: './src/client/app/index.tsx',
     output: {
@@ -83,7 +83,7 @@ const appConfig = function () {
   });
 };
 
-const adminConfig = function () {
+const adminConfig = () => {
   return merge(clientConfig(), {
     entry: './src/client/admin/index.tsx',
     performance: {
@@ -99,8 +99,7 @@ const adminConfig = function () {
 };
 
 const cssConfig = {
-  mode: 'production',
-  // mode: dotenv.parsed.NODE_ENV,
+  mode: webpackEnv,
   node: false,
   module: {
     rules: [
@@ -122,7 +121,7 @@ const cssConfig = {
   resolve: {
     extensions: ['.css', '.scss'],
   },
-  plugins: [new OptimizeCSSAssetsPlugin({})],
+  plugins: [new OptimizeCSSAssetsPlugin({ canPrint: false })],
 };
 
 const appCssConfig = {
@@ -133,6 +132,7 @@ const appCssConfig = {
     }),
   ],
 };
+
 const adminCssConfig = {
   entry: './src/client/admin/scss/main.scss',
   plugins: [
@@ -141,4 +141,14 @@ const adminCssConfig = {
     }),
   ],
 };
+
+if (webpackEnv !== 'production') {
+  adminCssConfig.plugins.shift();
+  appCssConfig.plugins.shift();
+  cssConfig.module.rules[0].use.shift();
+  cssConfig.plugins.shift();
+}
+
+console.log(adminCssConfig, appCssConfig, cssConfig);
+
 module.exports = [serverConfig, appConfig, adminConfig, merge(cssConfig, appCssConfig), merge(cssConfig, adminCssConfig)];
