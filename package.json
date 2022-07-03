@@ -2,7 +2,7 @@
   "name": "mern-boilerplate",
   "author": "Burak Eren Karasu",
   "license": "MIT",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "This is the starter kit for my projects",
   "main": "dist/server.js",
   "keywords": [

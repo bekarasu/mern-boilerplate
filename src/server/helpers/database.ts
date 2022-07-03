@@ -2,11 +2,18 @@ import mongoose, { Mongoose } from 'mongoose';
 import { config } from '../config/config';
 
 export const connectDb = async () => {
-  const connectionString = config.db.srv || `mongodb://${config.db.host}:${config.db.port}/${config.db.database}`;
+  let connectionString = config.db.srv;
+  if (config.db.srv) {
+    connectionString = config.db.srv;
+  } else if (config.db.username && config.db.password) {
+    connectionString = `mongodb://${config.db.username}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.database}`;
+  } else {
+    connectionString = `mongodb://${config.db.host}:${config.db.port}/${config.db.database}`;
+  }
 
-  let connection: Promise<Mongoose>;
+  let connection: Mongoose;
   try {
-    connection = mongoose.connect(connectionString, {
+    connection = await mongoose.connect(connectionString, {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,

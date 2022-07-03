@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 export default (url: string, store: Store | null): string => {
-  console.log(1);
   const app = renderToString(
     store ? (
       <Provider store={store}>

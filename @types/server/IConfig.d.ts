@@ -3,6 +3,8 @@ export interface IConfig {
   env: string;
   db: {
     srv: DotEnvValue;
+    username: DotEnvValue;
+    password: DotEnvValue;
     host: DotEnvValue;
     port: DotEnvValue;
     database: DotEnvValue;
