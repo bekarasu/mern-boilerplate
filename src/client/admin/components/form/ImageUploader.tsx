@@ -7,28 +7,26 @@ class ImageUploader extends React.Component<IReduxFormProps & StyledComponentPro
   fileObj = [];
   fileArray = [];
 
-  constructor(props) {
+  constructor(props: IReduxFormProps & StyledComponentProps) {
     super(props);
     this.uploadMultipleFiles = this.uploadMultipleFiles.bind(this);
   }
 
-  uploadMultipleFiles(e: React.ChangeEvent<HTMLInputElement>) {
+  uploadMultipleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.fileObj = [];
     this.fileArray = []; // preview images
     this.fileObj.push(e.target.files);
     for (let i = 0; i < this.fileObj[0].length; i++) {
       this.fileArray.push(URL.createObjectURL(this.fileObj[0][i])); // image preview
     }
-  }
+  };
 
-  openFileDialog() {
-    // default file dialog
-    document.getElementById('upload-images').click();
-  }
+  openFileDialog = () => document.getElementById('upload-images').click();
 
-  render() {
+  render = () => {
     const {
       input: { onChange },
+      classes,
     } = this.props;
     const buttonStyle: React.CSSProperties = {
       height: '50px',
@@ -45,6 +43,7 @@ class ImageUploader extends React.Component<IReduxFormProps & StyledComponentPro
       width: '0px',
       overflow: 'hidden',
     };
+
     return (
       <>
         <div className="form-group multi-preview">
@@ -53,7 +52,7 @@ class ImageUploader extends React.Component<IReduxFormProps & StyledComponentPro
           ))}
         </div>
         <div className="form-group">
-          <div style={buttonStyle} className={this.props.classes.imageUploader} onClick={this.openFileDialog}>
+          <div style={buttonStyle} className={classes.imageUploader} onClick={this.openFileDialog}>
             Resim Yükleyin
           </div>
 
@@ -72,7 +71,7 @@ class ImageUploader extends React.Component<IReduxFormProps & StyledComponentPro
         </div>
       </>
     );
-  }
+  };
 }
 
 const styles = (theme: ITheme) => ({

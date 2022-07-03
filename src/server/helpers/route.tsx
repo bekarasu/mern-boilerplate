@@ -1,5 +1,6 @@
 import './string';
-export function toURLConverter(text: string): string {
+
+export const toURLConverter = (text: string) => {
   text = text.toLowerCase();
   text = text.replaceAll('ü', 'u');
   text = text.replaceAll(' ', '-');
@@ -10,4 +11,4 @@ export function toURLConverter(text: string): string {
   text = text.replaceAll('ç', 'c');
   text = encodeURI(text); // ensure for uncoverted parts
   return text;
-}
+};

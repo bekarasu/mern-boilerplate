@@ -11,6 +11,6 @@ export function toURLConverter(text: string): string {
   text = replaceAll(text, 'ş', 's');
   text = replaceAll(text, 'ğ', 'g');
   text = replaceAll(text, 'ç', 'c');
-  text = encodeURI(text); // ensure for uncoverted parts
+  text = encodeURI(text);
   return text;
 }

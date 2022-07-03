@@ -1,4 +1,4 @@
-import * as React from 'react'; // we should import this for avoiding " React refers to a UMD global but the current file is a module. Consider adding an import instead" error
+import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import App from '../../client/app/App';
@@ -6,15 +6,25 @@ import { Store } from 'redux';
 import serialize from 'serialize-javascript';
 import { Provider } from 'react-redux';
 import { Helmet } from 'react-helmet';
-export default (url: string, store: Store): string => {
+
+export default (url: string, store: Store | null): string => {
+  console.log(1);
   const app = renderToString(
-    <Provider store={store}>
+    store ? (
+      <Provider store={store}>
+        <StaticRouter location={url}>
+          <App />
+        </StaticRouter>
+      </Provider>
+    ) : (
       <StaticRouter location={url}>
         <App />
       </StaticRouter>
-    </Provider>,
+    ),
   );
+
   const helmet = Helmet.renderStatic();
+
   const html = `
     <html>
         <head>
@@ -26,7 +36,7 @@ export default (url: string, store: Store): string => {
         <body>
             <div id="app">${app}</div>
             <script>
-              window.INITIAL_STATE = ${serialize(store.getState())}
+              ${store ? 'window.INITIAL_STATE = ' + serialize(store.getState()) : null}
             </script>
             <script src="/app.js"></script>
         </body>

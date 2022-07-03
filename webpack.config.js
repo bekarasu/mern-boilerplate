@@ -65,7 +65,8 @@ const clientConfig = () => {
     },
     plugins: [
       new webpack.DefinePlugin({
-        'process.env.API_URL': JSON.stringify(dotenv.parsed.API_URL), // we use this in react app
+        // we use this in react app
+        'process.env.API_URL': JSON.stringify(dotenv.parsed.API_URL),
       }),
     ],
     resolve: {

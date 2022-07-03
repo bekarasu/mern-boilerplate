@@ -7,7 +7,7 @@ import UpdatePage from './../pages/UpdatePage';
 import ShowPage from './../pages/ShowPage';
 
 class ResourceRoute extends React.Component<IResourceRoute, RouteComponentProps<{}>> {
-  render() {
+  render = () => {
     return (
       <>
         <Route
@@ -32,6 +32,6 @@ class ResourceRoute extends React.Component<IResourceRoute, RouteComponentProps<
         />
       </>
     );
-  }
+  };
 }
 export default ResourceRoute;

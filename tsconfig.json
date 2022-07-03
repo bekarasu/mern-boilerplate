@@ -4,7 +4,7 @@
     "allowSyntheticDefaultImports": true,
     "suppressImplicitAnyIndexErrors": true,
     "jsx": "react",
-    "sourceMap": true,
+    "sourceMap": true
   },
   "exclude": ["node_modules"]
 }

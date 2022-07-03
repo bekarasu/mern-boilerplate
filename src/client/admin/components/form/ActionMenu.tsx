@@ -14,25 +14,14 @@ class ActionMenu extends React.Component<IActionMenuProps & StyledComponentProps
       dialogOpened: false,
     };
   }
-  handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    // handle menu button clicking
-    this.setState({ opened: event.currentTarget });
-  };
 
-  handleClose = () => {
-    // handle menu closing
-    this.setState({ opened: null });
-  };
+  handleClick = (event: React.MouseEvent<HTMLButtonElement>) => this.setState({ opened: event.currentTarget });
 
-  handleDialogShow = () => {
-    // close confirmation dialog
-    this.setState({ dialogOpened: true });
-  };
+  handleClose = () => this.setState({ opened: null });
 
-  handleDialogClose = () => {
-    // close confirmation dialog
-    this.setState({ dialogOpened: false });
-  };
+  handleDialogShow = () => this.setState({ dialogOpened: true });
+
+  handleDialogClose = () => this.setState({ dialogOpened: false });
 
   handleDelete = (): void => {
     const apiRequest = new ApiRequest();
@@ -44,7 +33,7 @@ class ActionMenu extends React.Component<IActionMenuProps & StyledComponentProps
     });
   };
 
-  render() {
+  render = () => {
     const menuItemStyle: React.CSSProperties = {
       width: '100%',
       padding: '0',
@@ -60,6 +49,7 @@ class ActionMenu extends React.Component<IActionMenuProps & StyledComponentProps
       padding: '0px',
       width: '100%',
     };
+
     return (
       <>
         <Button aria-controls="simple-menu" onClick={this.handleClick}>
@@ -95,11 +85,13 @@ class ActionMenu extends React.Component<IActionMenuProps & StyledComponentProps
         </Menu>
       </>
     );
-  }
+  };
 }
+
 const styles = (theme) => ({
   link: {
     color: theme.palette.primary.contrastText,
   },
 });
+
 export default withStyles(styles)(ActionMenu);

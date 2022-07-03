@@ -10,7 +10,7 @@ import SelectField from './SelectField';
 import WYSIWYG from './WYSIWYG';
 
 class FormFieldLoader extends React.Component<IFormFieldLoaderProps> {
-  render() {
+  render = () => {
     let component = null;
     let children = null;
 
@@ -42,6 +42,7 @@ class FormFieldLoader extends React.Component<IFormFieldLoaderProps> {
         component = 'Invalid Field Type: ' + this.props.item.type;
         break;
     }
+
     return (
       <FormControl style={this.props.style}>
         <Field
@@ -54,7 +55,7 @@ class FormFieldLoader extends React.Component<IFormFieldLoaderProps> {
         </Field>
       </FormControl>
     );
-  }
+  };
 }
 
 export default FormFieldLoader;

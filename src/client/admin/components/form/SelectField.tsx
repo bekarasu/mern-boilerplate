@@ -1,8 +1,7 @@
 import { InputLabel, MenuItem, Select } from '@material-ui/core';
 import React from 'react';
 
-// TODO make ts compatible
-const SelectField = ({ input, label, children, ...custom }) => (
+const SelectField = ({ input, label, ...custom }) => (
   <>
     <InputLabel htmlFor="color-native-simple">{label}</InputLabel>
     <Select {...input} {...custom}>

@@ -11,7 +11,7 @@ import CustomForm from './form/CustomForm';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
 class FilterFormFooter extends React.Component<StyledComponentProps> {
-  render() {
+  render = () => {
     const submitStyle: React.CSSProperties = {
       marginLeft: 'auto',
       marginTop: '10px',
@@ -40,7 +40,7 @@ class FilterFormFooter extends React.Component<StyledComponentProps> {
         </Grid>
       </>
     );
-  }
+  };
 }
 
 const styles = (theme: ITheme) =>
@@ -69,9 +69,9 @@ class Filter extends React.Component<IFilterProps, IFilterState> {
       showFilter: false, // filter form showing
     };
   }
-  showFilter(filter: boolean) {
-    this.setState({ showFilter: !filter });
-  }
+
+  showFilter = (filter: boolean) => this.setState({ showFilter: !filter });
+
   submit = (requestFields: IFormPostRequestFields) => {
     const filters: Array<IFilter> = [];
     let count = 0;
@@ -85,7 +85,7 @@ class Filter extends React.Component<IFilterProps, IFilterState> {
     store.dispatch(setFilter({ fields: filters }));
   };
 
-  render() {
+  render = () => {
     const filterStyle: React.CSSProperties = {
       margin: '20px 0px',
     };
@@ -103,7 +103,7 @@ class Filter extends React.Component<IFilterProps, IFilterState> {
           </Button>
         </Grid>
         {this.state.showFilter && (
-          <Grid item md={12} container justify="center">
+          <Grid item md={12} container justifyContent="center">
             <Grid item md={9}>
               {/* TODO add "like" operator support */}
               <FilterFormRedux onSubmit={this.submit} items={this.props.items} />
@@ -112,7 +112,7 @@ class Filter extends React.Component<IFilterProps, IFilterState> {
         )}
       </Grid>
     );
-  }
+  };
 }
 
 export default Filter;

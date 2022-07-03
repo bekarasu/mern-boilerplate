@@ -1,12 +1,20 @@
-import AbstractDb from '../database/connection/AbstractDb';
-import Mongo from '../database/connection/drivers/Mongo';
+import mongoose, { Mongoose } from 'mongoose';
+import { config } from '../config/config';
 
-export const loadDb = (driver: string): AbstractDb | null => {
-  switch (driver) {
-    case 'mongo':
-    case 'mongodb':
-      return new Mongo();
-    default:
-      return null;
+export const connectDb = async () => {
+  const connectionString = config.db.srv || `mongodb://${config.db.host}:${config.db.port}/${config.db.database}`;
+
+  let connection: Promise<Mongoose>;
+  try {
+    connection = mongoose.connect(connectionString, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+    });
+  } catch (err) {
+    console.log('DB Connection Error: ' + err.message);
+    return null;
   }
+
+  return connection;
 };

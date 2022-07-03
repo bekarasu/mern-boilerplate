@@ -6,6 +6,7 @@ import { IUpdatePageProps, IUpdatePageState } from '../../../../@types/client/ad
 import { trans } from '../../../shared/resources/lang/translate';
 import ApiRequest from '../libraries/ApiRequest';
 import { FieldItem } from './../../../../@types/client/admin/form.d';
+const requester = new ApiRequest();
 
 class ShowPage extends React.Component<IUpdatePageProps & RouteComponentProps<RouteParams>, IUpdatePageState> {
   constructor(props: IUpdatePageProps & RouteComponentProps<RouteParams>) {
@@ -15,17 +16,24 @@ class ShowPage extends React.Component<IUpdatePageProps & RouteComponentProps<Ro
       items: this.props.items,
     };
   }
-  componentDidMount() {
-    const requester = new ApiRequest();
-    requester.get(this.props.serverResource + '/' + this.props.match.params.id).then((res: any) => {
-      const data = res.data.data;
-      this.setState({ fetching: false, ...data });
-    });
-  }
-  render() {
+
+  componentDidMount = async () => {
+    let res;
+    try {
+      res = await requester.get(this.props.serverResource + '/' + this.props.match.params.id);
+    } catch (err) {
+      return this.setState({ fetching: false });
+    }
+
+    const data = res.data.data;
+    this.setState({ fetching: false, ...data });
+  };
+
+  render = () => {
+    const { fetching, items, title } = this.state;
     return (
       <>
-        {this.state.fetching ? (
+        {fetching ? (
           <>
             <Helmet>
               <title>{'Sayfa Yükleniyor...'}</title> {/** TODO localization */}
@@ -35,19 +43,17 @@ class ShowPage extends React.Component<IUpdatePageProps & RouteComponentProps<Ro
         ) : (
           <>
             <Helmet>
-              <title>{trans('resource.show', { item: this.state.title })}</title>
+              <title>{trans('resource.show', { item: title })}</title>
             </Helmet>
             <Grid container direction="column">
-              {this.state.items.map((item: FieldItem, index: number) => {
+              {items.map((item: FieldItem, index: number) => {
                 return (
                   <TextField
                     style={{ margin: '20px 0' }}
                     key={index}
                     label={trans('db.' + item.name)}
                     defaultValue={item.initialValue}
-                    InputProps={{
-                      readOnly: true,
-                    }}
+                    InputProps={{ readOnly: true }}
                   />
                 );
               })}
@@ -56,7 +62,7 @@ class ShowPage extends React.Component<IUpdatePageProps & RouteComponentProps<Ro
         )}
       </>
     );
-  }
+  };
 }
 
 interface RouteParams {

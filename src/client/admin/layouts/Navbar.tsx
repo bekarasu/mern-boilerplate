@@ -10,14 +10,14 @@ import { setTheme } from './../store/theme/actions';
 import { connect } from 'react-redux';
 
 class Navbar extends React.Component<INavbarProps> {
-  handleLogout() {
+  handleLogout = () => {
     store.dispatch(logout());
-  }
+  };
 
-  handleThemeChange() {
+  handleThemeChange = () => {
     store.dispatch(setTheme(this.props.theme.palette.type === 'dark' ? 'light' : 'dark'));
-  }
-  render() {
+  };
+  render = () => {
     return (
       <nav style={this.props.style}>
         <Button onClick={this.handleThemeChange.bind(this)}>
@@ -26,7 +26,7 @@ class Navbar extends React.Component<INavbarProps> {
         <Button onClick={this.handleLogout}>{trans('forms.logout')}</Button>
       </nav>
     );
-  }
+  };
 }
 
 const mapStateToProps = (state: any) => {

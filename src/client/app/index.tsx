@@ -6,10 +6,16 @@ import App from './App';
 import { store } from './store';
 
 ReactDOM.hydrate(
-  <Provider store={store}>
+  store ? (
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  ) : (
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </Provider>,
+  ),
   document.getElementById('app'),
 );

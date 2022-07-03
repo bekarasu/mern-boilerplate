@@ -12,20 +12,20 @@ class Sidebar extends React.Component<ISidebarProps, ISidebarState> {
       listItems: [],
     };
   }
-  componentDidMount() {
+
+  componentDidMount = () => {
     const requester = new ApiRequest();
     requester.get('admin-menu').then((res: any) => {
       this.setState({ listItems: res.data.data });
     });
-  }
-  render() {
-    return (
-      <>
-        <p>{trans('sidebar.greetings', { name: this.props.user.name })}</p>
-        {this.state.listItems.length > 0 && <NestedList items={this.state.listItems} />}
-      </>
-    );
-  }
+  };
+
+  render = () => (
+    <>
+      <p>{trans('sidebar.greetings', { name: this.props.user.name })}</p>
+      {this.state.listItems.length > 0 && <NestedList items={this.state.listItems} />}
+    </>
+  );
 }
 
 const mapStateToProps = (state: any) => {

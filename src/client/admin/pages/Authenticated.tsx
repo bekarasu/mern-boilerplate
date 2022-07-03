@@ -13,21 +13,22 @@ import { clearResult } from '../store/result/actions';
 import { IAuthenticatedPageProps } from './../../../../@types/client/admin/pages.d';
 import { setTheme } from './../store/theme/actions';
 class Authenticated extends React.Component<RouteConfigComponentProps<{}> & IAuthenticatedPageProps> {
-  componentDidMount() {
-    store.dispatch(setTheme(localStorage.getItem('admin:theme') === 'dark' ? 'dark' : 'light'));
-  }
-  componentDidUpdate(prevProps) {
+  componentDidMount = () => store.dispatch(setTheme(localStorage.getItem('admin:theme') === 'dark' ? 'dark' : 'light'));
+
+  componentDidUpdate = (prevProps) => {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       if (this.props.result.showed) {
         store.dispatch(clearResult()); // remove the ResultMessageBox
       }
     }
-  }
-  render() {
+  };
+
+  render = () => {
     const navbarStyle: React.CSSProperties = {
       float: 'right',
       padding: '20px 10px',
     };
+
     return (
       typeof this.props.theme.palette !== 'undefined' && (
         <ThemeProvider theme={this.props.theme}>
@@ -47,7 +48,7 @@ class Authenticated extends React.Component<RouteConfigComponentProps<{}> & IAut
         </ThemeProvider>
       )
     );
-  }
+  };
 }
 
 const mapStateToProps = (state: any) => {

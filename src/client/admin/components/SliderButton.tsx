@@ -3,17 +3,19 @@ import React from 'react';
 import { ISliderButtonProps, ISliderButtonState } from '../../../../@types/client/admin/components';
 
 class SliderButton extends React.Component<ISliderButtonProps, ISliderButtonState> {
-  triggerPageChange(page: number) {
-    this.props.buttonClickHandler(page);
-    this.setState({ activeButton: page });
-  }
   constructor(props) {
     super(props);
     this.state = {
       activeButton: props.activeButton,
     };
   }
-  render() {
+
+  triggerPageChange = (page: number) => {
+    this.props.buttonClickHandler(page);
+    this.setState({ activeButton: page });
+  };
+
+  render = () => {
     const paginationButtons = [];
     // TODO previous button 1 ... 4 5 not working
     // TODO handle the page length change active button
@@ -67,7 +69,7 @@ class SliderButton extends React.Component<ISliderButtonProps, ISliderButtonStat
       }
     }
     return paginationButtons;
-  }
+  };
 }
 
 export default SliderButton;

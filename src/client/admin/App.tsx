@@ -15,7 +15,7 @@ class App extends React.Component<IAppProps, IAppState> {
       authorizing: true,
     };
   }
-  componentDidMount() {
+  componentDidMount = () => {
     const apiRequest = new ApiRequest();
     apiRequest
       .get('auth-token')
@@ -26,9 +26,9 @@ class App extends React.Component<IAppProps, IAppState> {
       })
       .then(() => this.setState({ authorizing: false }))
       .catch(() => this.setState({ authorizing: false }));
-  }
+  };
 
-  render() {
+  render = () => {
     const { user } = this.props;
     return (
       <>
@@ -40,7 +40,7 @@ class App extends React.Component<IAppProps, IAppState> {
         )}
       </>
     );
-  }
+  };
 }
 
 export interface IAppProps {
@@ -56,4 +56,5 @@ const mapStateToProps = (state: any) => {
     user: state.auth.user,
   };
 };
+
 export default connect(mapStateToProps)(App);

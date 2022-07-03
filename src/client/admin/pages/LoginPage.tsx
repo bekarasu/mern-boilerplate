@@ -21,7 +21,7 @@ class LoginPage extends React.Component<{}, ILoginPageState> {
   setUsername = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => this.setState({ username: e.currentTarget.value });
   setPassword = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => this.setState({ password: e.currentTarget.value });
 
-  async handleLogin() {
+  handleLogin = async () => {
     const formData: object = {
       username: this.state.username,
       password: this.state.password,
@@ -32,9 +32,9 @@ class LoginPage extends React.Component<{}, ILoginPageState> {
         store.dispatch(login(res.data.data.user));
       }
     });
-  }
+  };
 
-  render() {
+  render = () => {
     return (
       <Grid container direction="column" justifyContent="center" alignItems="center">
         <TextField name="username" label={trans('forms.username')} value={this.state.username} onChange={this.setUsername} />
@@ -42,7 +42,7 @@ class LoginPage extends React.Component<{}, ILoginPageState> {
         <StyledButton onClick={this.handleLogin.bind(this)}>{trans('forms.login')}</StyledButton>
       </Grid>
     );
-  }
+  };
 }
 
 const mapStateToProps = (state: any) => {

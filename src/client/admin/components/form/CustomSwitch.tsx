@@ -15,14 +15,16 @@ class CustomSwitch extends React.Component<SwitchProps & IReduxFormProps & Field
     } = this.props;
     onChange(this.state.value); // required for redux-form handler
   }
-  handleChange() {
+
+  handleChange = () => {
     const {
       input: { onChange },
     } = this.props;
     onChange(!this.state.value); // required for redux-form handler
     this.setState({ value: !this.state.value });
-  }
-  render() {
+  };
+
+  render = () => {
     return (
       <>
         <span>{this.props.label}</span>
@@ -37,7 +39,7 @@ class CustomSwitch extends React.Component<SwitchProps & IReduxFormProps & Field
         />
       </>
     );
-  }
+  };
 }
 
 export default CustomSwitch;

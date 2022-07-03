@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
 import { promisify } from 'util';
 import HttpException from '../../../exceptions/api/HTTPException';
+import { config } from '../../../config/config';
 
 const unlinkAsync = promisify(fs.unlink);
 
@@ -15,7 +16,7 @@ export const errorHandler = (error: HttpException, request: Request, response: R
     files.forEach((file: Express.Multer.File): Promise<void> => unlinkAsync(file.path));
   }
 
-  if (process.env.NODE_ENV === 'production') {
+  if (config.env === 'production') {
     message = 'We are having some problems. This error logged.';
     data = { error: error.error };
   } else {

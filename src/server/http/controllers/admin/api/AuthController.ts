@@ -1,12 +1,11 @@
 import bcrypt from 'bcryptjs';
-import * as dotenv from 'dotenv';
 import { NextFunction, Request, Response } from 'express';
 import jwt, { Secret, VerifyErrors } from 'jsonwebtoken';
 import AdminUserRepository from '../../../../database/repositories/AdminUserRepository';
 import HttpException from '../../../../exceptions/api/HTTPException';
 import { IPanelUser } from './../../../../../../@types/client/admin/user.d';
 import { AdminUser } from '../../../../models/AdminUser';
-dotenv.config();
+import { config } from '../../../../config/config';
 
 class AuthController {
   service = new AdminUserRepository(AdminUser);
@@ -22,11 +21,11 @@ class AuthController {
         name: adminUser.name,
         role: 'admin',
       };
-      if (process.env.JWT_SECRET == null) {
+      if (config.jwtKey == null) {
         throw new HttpException(500, 'JWT Secret Token Not Defined');
       }
-      const jwtToken = jwt.sign(user, process.env.JWT_SECRET, {
-        expiresIn: '360000s',
+      const jwtToken = jwt.sign(user, config.jwtKey, {
+        expiresIn: config.jwtExpireTime,
       });
       res.customResponse({ access_token: jwtToken, user: user });
     } catch (e) {
@@ -45,12 +44,12 @@ class AuthController {
       throw new HttpException(500, 'JWT Secret Token Not Defined');
     }
 
-    if (process.env.JWT_SECRET == null) {
+    if (config.jwtKey == null) {
       throw new HttpException(500, 'JWT Secret Token Not Defined');
     }
 
     const token = accessToken.slice(7, accessToken.length);
-    const JWT_SECRET: Secret = process.env.JWT_SECRET;
+    const JWT_SECRET: Secret = config.jwtKey;
 
     jwt.verify(token, JWT_SECRET, (err: VerifyErrors | null, decoded: object | undefined): void => {
       if (err) {

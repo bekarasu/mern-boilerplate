@@ -1,8 +1,6 @@
-# MERN Stack Web App Starter Kit
+# MERN Stack Boilerplate
 
-This is starter kit that helps the quick start to developing small-medium sized content based web apps. I included only some basic dependencies for MERN stack development with Typescript. More detailed documentation explained in docs folder about how to system works and file structures.
-
-**Caution:** This project isn't fully completed. So some features may be buggy. You can send pull request and fix the bugs.
+This boilerplate helps you to quick start to developing content based web apps. I included only some basic dependencies for MERN stack with Typescript.
 
 Additional integrations are provided:
 
@@ -11,6 +9,8 @@ Additional integrations are provided:
 - Server Side Rendering for User App side
 - React Router
 - React Redux
+- ESLint
+- Prettier
 
 Some extra features:
 

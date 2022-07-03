@@ -6,17 +6,19 @@ import { IResultMessageBoxProps } from '../../../../../@types/client/admin/form'
 import { setShowedResult } from '../../store/result/actions';
 
 class ResultMessageBox extends React.Component<IResultMessageBoxProps> {
-  componentDidMount() {
+  componentDidMount = () => {
     if (this.props.result.type != null) {
       /** TODO what is it doing? */
       store.dispatch(setShowedResult(this.props.result.type, this.props.result.message));
     }
-  }
-  render() {
+  };
+
+  render = () => {
     const style: React.CSSProperties = {
       margin: '20px 0',
       width: '100%',
     };
+
     return (
       this.props.result.type && (
         <div style={style}>
@@ -24,7 +26,7 @@ class ResultMessageBox extends React.Component<IResultMessageBoxProps> {
         </div>
       )
     );
-  }
+  };
 }
 
 const mapStateToProps = (state: any) => {

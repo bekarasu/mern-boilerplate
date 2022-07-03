@@ -10,7 +10,7 @@ import CustomForm from '../components/form/CustomForm';
 import ApiRequest from '../libraries/ApiRequest';
 
 class UpdateFormFooter extends React.Component {
-  render() {
+  render = () => {
     const submitStyle: React.CSSProperties = {
       marginLeft: 'auto',
       marginTop: '10px',
@@ -22,7 +22,7 @@ class UpdateFormFooter extends React.Component {
         </Button>
       </>
     );
-  }
+  };
 }
 
 const UpdateForm = (props) => {
@@ -42,19 +42,19 @@ class UpdatePage extends React.Component<IUpdatePageProps & RouteComponentProps<
       items: this.props.items,
     };
   }
-  componentDidMount() {
+  componentDidMount = () => {
     const requester = new ApiRequest();
     requester.get(this.props.serverResource + '/' + this.props.match.params.id + '/edit').then((res: any) => {
       const data = res.data.data;
       this.setState({ fetching: false, ...data });
     });
-  }
-  submit(values: object) {
+  };
+  submit = (values: object) => {
     const requester = new ApiRequest();
     const fd = jsonToFormData(values);
     requester.put(this.state.resource + '/' + this.props.match.params.id, fd);
-  }
-  render() {
+  };
+  render = () => {
     return (
       <>
         <Helmet>
@@ -63,7 +63,7 @@ class UpdatePage extends React.Component<IUpdatePageProps & RouteComponentProps<
         {this.state.fetching ? <p>Yükleniyor... </p> : <UpdateFormRedux onSubmit={this.submit.bind(this)} items={this.state.items} />}
       </>
     );
-  }
+  };
 }
 
 interface RouteParams {

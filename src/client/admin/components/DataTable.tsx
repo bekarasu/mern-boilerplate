@@ -9,7 +9,7 @@ import DataTableBody from './DataTable/DataTableBody';
 import DataTableFooter from './DataTable/DataTableFooter';
 import DataTableHead from './DataTable/DataTableHead';
 import Filter from './Filter';
-
+const requester = new ApiRequest();
 class DataTable extends React.Component<IDataTableProps, IDataTableState> {
   constructor(props: IDataTableProps) {
     super(props);
@@ -21,32 +21,34 @@ class DataTable extends React.Component<IDataTableProps, IDataTableState> {
         start: 0,
         orderBy: null,
       },
-      dataCount: null,
+      dataCount: 0,
       deleteResult: null,
       currentPage: 1,
     };
   }
-  actionResult(result: boolean): void {
+
+  actionResult = (result: boolean): void => {
     this.getData();
     this.setState({ deleteResult: result ? 'success' : 'error' });
-  }
-  componentDidMount() {
-    this.getData();
-  }
-  handlePageChange = (page: number) => {
-    const newParams = this.state.requestParams;
-    newParams.start = (page - 1) * this.state.requestParams.limit; // you should use page - 1 for better accurate
-    this.setState({ requestParams: newParams, currentPage: page });
-    this.getData();
   };
-  handleDataLengthChange = (length: number) => {
-    const newParams = this.state.requestParams;
-    newParams.limit = length;
-    this.setState({ requestParams: newParams });
+
+  componentDidMount = () => this.getData();
+
+  handlePageChange = (page: number) => {
+    const { requestParams } = this.state;
+    requestParams.start = (page - 1) * requestParams.limit;
+    this.setState({ requestParams, currentPage: page });
     this.getData();
   };
 
-  componentDidUpdate(prevProps: IDataTableProps) {
+  handleDataLengthChange = (length: number) => {
+    const { requestParams } = this.state;
+    requestParams.limit = length;
+    this.setState({ requestParams });
+    this.getData();
+  };
+
+  componentDidUpdate = (prevProps: IDataTableProps) => {
     if (prevProps.resourceURL !== this.props.resourceURL || prevProps.filters.fields !== this.props.filters.fields) {
       // check these for preventing unnecessary data getting
       if (this.props.filters.fields !== null) {
@@ -61,45 +63,63 @@ class DataTable extends React.Component<IDataTableProps, IDataTableState> {
             search += ','; // seperate the fields
           }
         });
-        const newRequestParams = this.state.requestParams;
-        newRequestParams.search = search;
-        this.setState({ requestParams: newRequestParams, items: [] });
+        const requestParams = this.state.requestParams;
+        requestParams.search = search;
+        this.setState({ requestParams, items: [] });
       }
       this.getData();
     }
-  }
+  };
 
-  getData() {
+  getData = async () => {
+    const { resourceURL } = this.props;
+    if (!resourceURL) {
+      return this.setState({ fetching: false });
+    }
+
+    const { requestParams } = this.state;
+
     this.setState({ fetching: true });
     window.scrollTo(0, 0);
-    const requester = new ApiRequest();
-    requester.get(this.props.resourceURL, this.state.requestParams).then((res: any) => {
-      this.setState({ items: res.data.data.items, dataCount: res.data.data.total, fetching: false });
-    });
-  }
-  render() {
+
+    let res;
+    try {
+      res = await requester.get(resourceURL, requestParams);
+    } catch (err) {
+      return this.setState({ fetching: false });
+    }
+
+    const { items, total: dataCount } = res.data.data;
+    this.setState({ items, dataCount, fetching: false });
+  };
+
+  render = () => {
+    const { currentPage, fetching, dataCount, items, requestParams, deleteResult } = this.state;
+
+    console.log(items, fetching, dataCount);
+
     return (
       <>
-        {typeof this.props.filterFields !== 'undefined' && this.props.filterFields.length !== 0 && <Filter items={this.props.filterFields} />}
+        {this.props.filterFields && this.props.filterFields.length !== 0 && <Filter items={this.props.filterFields} />}
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
-            <DataTableHead fetching={this.state.fetching} {...this.props} items={this.state.items} />
-            <DataTableBody fetching={this.state.fetching} items={this.state.items} {...this.props} actionResult={this.actionResult.bind(this)} />
+            <DataTableHead fetching={fetching} {...this.props} items={items} />
+            <DataTableBody fetching={fetching} items={items} {...this.props} actionResult={this.actionResult.bind(this)} />
             <DataTableFooter
-              currentPage={this.state.currentPage}
+              currentPage={currentPage}
               dataLengthChange={this.handleDataLengthChange}
               pageChange={this.handlePageChange}
-              fetching={this.state.fetching}
-              dataCount={this.state.dataCount}
+              fetching={fetching}
+              dataCount={dataCount}
               {...this.props}
-              limit={this.state.requestParams.limit}
+              limit={requestParams.limit}
             />
           </Table>
         </TableContainer>
         {/** TODO make it app-wide snackbar */}
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          open={this.state.deleteResult != null}
+          open={deleteResult != null}
           autoHideDuration={5000}
           onClose={() => {
             this.setState({ deleteResult: null });
@@ -109,7 +129,7 @@ class DataTable extends React.Component<IDataTableProps, IDataTableState> {
         </Snackbar>
       </>
     );
-  }
+  };
 }
 
 const mapStateToProps = (state: any) => {

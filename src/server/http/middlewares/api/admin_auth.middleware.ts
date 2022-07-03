@@ -1,11 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import * as dotenv from 'dotenv';
 import HttpException from '../../../exceptions/api/HTTPException';
-dotenv.config();
+import { config } from '../../../config/config';
 
 export const Auth = (req: Request, response: Response, next: NextFunction) => {
-  if (process.env.JWT_SECRET == null) {
+  if (!config.jwtKey) {
     throw new HttpException(500, 'JWT Secret Token Not Defined');
   }
 
@@ -21,7 +20,7 @@ export const Auth = (req: Request, response: Response, next: NextFunction) => {
 
   let tokenVerified: null | string | JwtPayload;
   try {
-    tokenVerified = jwt.verify(token, process.env.JWT_SECRET);
+    tokenVerified = jwt.verify(token, config.jwtKey);
   } catch (err) {
     return response.status(401).setMessage('Token Is Invalid').customResponse();
   }

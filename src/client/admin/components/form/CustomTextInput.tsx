@@ -13,16 +13,18 @@ class CustomTextInput extends React.Component<TextFieldProps & IReduxFormProps &
     } = this.props;
     onChange(this.state.value);
   }
-  handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+
+  handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {
       input: { onChange },
     } = this.props;
     onChange(e.target.value);
     this.setState({ value: e.target.value });
-  }
-  render() {
+  };
+
+  render = () => {
     return <TextField label={this.props.label} value={this.state.value} type={this.props.type} onChange={(e) => this.handleChange(e)}></TextField>;
-  }
+  };
 }
 
 export default CustomTextInput;

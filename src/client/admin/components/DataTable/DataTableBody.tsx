@@ -6,7 +6,7 @@ import { trans } from '../../../../shared/resources/lang/translate';
 import ActionMenu from '../form/ActionMenu';
 
 class DataTableBody extends React.Component<IDataTableBodyProps & StyledComponentProps> {
-  render() {
+  render = () => {
     return (
       <TableBody>
         {this.props.fetching ? (
@@ -43,7 +43,7 @@ class DataTableBody extends React.Component<IDataTableBodyProps & StyledComponen
         )}
       </TableBody>
     );
-  }
+  };
 }
 
 const styles = (theme: ITheme) => ({

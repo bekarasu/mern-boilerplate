@@ -4,7 +4,7 @@ import { FieldItem, ICustomFormProps } from '../../../../../@types/client/admin/
 import FormFieldLoader from './FormFieldLoader';
 
 class CustomForm extends React.Component<ICustomFormProps> {
-  render() {
+  render = () => {
     const formStyle: React.CSSProperties = {
       width: '100%',
       display: 'flex',
@@ -13,19 +13,22 @@ class CustomForm extends React.Component<ICustomFormProps> {
     const fieldStyle: React.CSSProperties = {
       margin: '10px 0',
     };
+    const { footerComponent, items, handleSubmit } = this.props;
+
     return (
-      <form style={formStyle} onSubmit={this.props.handleSubmit}>
-        {this.props.items.map((item: FieldItem) => {
+      <form style={formStyle} onSubmit={handleSubmit}>
+        {items.map((item: FieldItem) => {
           // render the form input fields
           return <FormFieldLoader style={fieldStyle} key={item.name} item={item} />;
         })}
-        {this.props.footerComponent != null && (
-          <Grid container direction="row" justify="space-between" alignContent="center" style={fieldStyle}>
-            {this.props.footerComponent}
+        {footerComponent != null && (
+          <Grid container direction="row" justifyContent="space-between" alignContent="center" style={fieldStyle}>
+            {footerComponent}
           </Grid>
         )}
       </form>
     );
-  }
+  };
 }
+
 export default CustomForm;

@@ -3,7 +3,7 @@ import React from 'react';
 import { IConfirmationDialogProps } from '../../../../@types/client/admin/components';
 
 class ConfirmationDialog extends React.Component<IConfirmationDialogProps> {
-  render() {
+  render = () => {
     return (
       <Dialog
         open={this.props.opened}
@@ -29,7 +29,7 @@ class ConfirmationDialog extends React.Component<IConfirmationDialogProps> {
         </DialogActions>
       </Dialog>
     );
-  }
+  };
 }
 
 export default ConfirmationDialog;

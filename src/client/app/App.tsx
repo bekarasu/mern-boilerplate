@@ -6,17 +6,15 @@ import Navbar from './layouts/Navbar';
 import { Container } from 'react-bootstrap';
 
 class App extends React.Component {
-  render() {
-    return (
-      <>
-        <Navbar />
-        <Container className="min-vh-100">
-          <div>{renderRoutes(Routes)}</div>
-        </Container>
-        <Footer />
-      </>
-    );
-  }
+  render = () => (
+    <>
+      <Navbar />
+      <Container className="min-vh-100">
+        <div>{renderRoutes(Routes)}</div>
+      </Container>
+      <Footer />
+    </>
+  );
 }
 
 export default App;

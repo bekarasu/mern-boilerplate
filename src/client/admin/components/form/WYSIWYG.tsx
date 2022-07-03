@@ -6,7 +6,7 @@ import { FieldItem, IReduxFormProps } from '../../../../../@types/client/admin/f
 import { adminApiURL } from '../../../resources/strings/apiURL';
 
 class WYSIWYG extends React.Component<IReduxFormProps & FieldItem & StyledComponentProps> {
-  render() {
+  render = () => {
     const {
       input: { onChange },
     } = this.props; // redux form props
@@ -29,7 +29,7 @@ class WYSIWYG extends React.Component<IReduxFormProps & FieldItem & StyledCompon
         />
       </div>
     );
-  }
+  };
 }
 
 const styles = (theme) => ({
@@ -40,11 +40,7 @@ const styles = (theme) => ({
 
 export default withStyles(styles)(WYSIWYG);
 
-function CKUploadAdapterPlugin(editor) {
-  editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
-    return new CKUploadAdapter(loader);
-  };
-}
+const CKUploadAdapterPlugin = (editor) => (editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new CKUploadAdapter(loader));
 
 class CKUploadAdapter {
   loader: any;
@@ -57,34 +53,31 @@ class CKUploadAdapter {
     this.url = `${adminApiURL}/uploadFile`; // TODO it must be dynamic url
   }
 
-  // Starts the upload process.
-  upload() {
+  upload = () => {
     return new Promise((resolve, reject) => {
       this._initRequest();
       this._initListeners(resolve, reject);
       this._sendRequest();
     });
-  }
+  };
 
-  // Aborts the upload process.
-  abort() {
+  abort = () => {
     if (this.xhr) {
       this.xhr.abort();
     }
-  }
+  };
 
-  // Example implementation using XMLHttpRequest.
-  _initRequest() {
+  _initRequest = () => {
     const xhr = (this.xhr = new XMLHttpRequest());
 
     xhr.open('POST', this.url, true);
     xhr.responseType = 'json';
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
     xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('admin:accessToken'));
-  }
+  };
 
   // Initializes XMLHttpRequest listeners.
-  _initListeners(resolve, reject) {
+  _initListeners = (resolve, reject) => {
     const xhr = this.xhr;
     const loader = this.loader;
     const genericErrorText = "Couldn't upload file:" + ` ${loader.file.name}.`;
@@ -96,8 +89,7 @@ class CKUploadAdapter {
       if (!response || response.error) {
         return reject(response && response.error ? response.error.message : genericErrorText);
       }
-      // If the upload is successful, resolve the upload promise with an object containing
-      // at least the "default" URL, pointing to the image on the server.
+
       resolve({
         default: response.data.url,
       });
@@ -111,15 +103,14 @@ class CKUploadAdapter {
         }
       });
     }
-  }
+  };
 
-  // Prepares the data and sends the request.
-  _sendRequest() {
+  _sendRequest = () => {
     const data = new FormData();
 
     this.loader.file.then((result) => {
       data.append('file', result);
       this.xhr.send(data);
     });
-  }
+  };
 }

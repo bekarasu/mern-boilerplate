@@ -13,13 +13,7 @@ axiosInstance.interceptors.response.use(
 
     return Promise.resolve(response);
   },
-  (error) => {
-    if (error.response) {
-      return Promise.resolve(error.response);
-    }
-
-    return Promise.reject(error.message);
-  },
+  (error) => Promise.reject(error.response),
 );
 
 axiosInstance.interceptors.request.use(
@@ -30,7 +24,7 @@ axiosInstance.interceptors.request.use(
       store.dispatch(logout());
       return {
         ...config,
-        cancelToken: new axios.CancelToken((cancel) => cancel(''))
+        cancelToken: new axios.CancelToken((cancel) => cancel('')),
       };
     }
 

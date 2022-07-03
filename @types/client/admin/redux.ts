@@ -18,18 +18,16 @@ export interface IFilterFields {
 export interface Message {
   message: string | null;
   type: result | null;
-  redirected: boolean; // we should show the redirected.
+  redirected: boolean;
   showed: boolean;
 }
 
 export interface ServerResult {
-  // server result for result message box
   type: typeof SERVER_RESULT;
   payload: Message;
 }
 
 export interface ClearResult {
-  // clear the result for result message box
   type: typeof CLEAR_RESULT;
   payload: Message;
 }
@@ -42,7 +40,3 @@ export interface SetShowedResult {
 export type ResultTypes = ServerResult | ClearResult | SetShowedResult;
 
 export const SET_THEME = 'set_theme';
-export interface SetTheme {
-  type: typeof SET_THEME;
-  payload: any;
-}

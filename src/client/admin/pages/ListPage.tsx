@@ -21,24 +21,33 @@ class ListPage extends React.Component<ICrudPageProps & StyledComponentProps & R
       fetching: true,
     };
   }
-  componentDidMount() {
-    this.getInitData();
-  }
-  getInitData() {
+
+  componentDidMount = () => this.getInitData();
+
+  getInitData = async () => {
     const requester = new ApiRequest();
-    requester.get(this.props.serverResource + '/list').then((res: any) => {
-      const data = res.data.data;
-      this.setState({ fetching: false, ...data });
-    });
-  }
-  render() {
+    let data;
+    try {
+      const res = await requester.get(this.props.serverResource + '/list');
+      data = res.data.data;
+    } catch (err) {
+      this.setState({ fetching: false });
+      return;
+    }
+
+    this.setState({ fetching: false, ...data });
+  };
+
+  render = () => {
     const buttonContainerStyle: React.CSSProperties = {
       margin: '10px 0px',
       float: 'right',
     };
+    const { fetching, title, disableAdd, resource, filterItems, fields, actions } = this.state;
+
     return (
       <>
-        {this.state.fetching ? (
+        {fetching ? (
           <>
             <Helmet>
               <title>{'Sayfa Yükleniyor...'}</title> {/** TODO localization */}
@@ -48,28 +57,23 @@ class ListPage extends React.Component<ICrudPageProps & StyledComponentProps & R
         ) : (
           <>
             <Helmet>
-              <title>{this.state.title}</title>
+              <title>{title}</title>
             </Helmet>
             <ResultMessageBox />
-            {!this.state.disableAdd && (
+            {!disableAdd && (
               <div className="button-container" style={buttonContainerStyle}>
-                <Button component={Link} className={this.props.classes.addButton} to={'/' + this.state.resource + '/create'}>
+                <Button component={Link} className={this.props.classes.addButton} to={`/${resource}/create`}>
                   {trans('resource.add', { item: '' })}
                 </Button>
               </div>
             )}
 
-            <DataTable
-              filterFields={this.state.filterItems}
-              resourceURL={this.state.resource}
-              fields={this.state.fields}
-              actions={this.state.actions}
-            />
+            <DataTable filterFields={filterItems} resourceURL={resource} fields={fields} actions={actions} />
           </>
         )}
       </>
     );
-  }
+  };
 }
 
 const styles = (theme) => ({

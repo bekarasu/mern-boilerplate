@@ -4,11 +4,11 @@ import { IDataTableHeadProps } from '../../../../../@types/client/admin/componen
 import { trans } from '../../../../shared/resources/lang/translate';
 
 class DataTableHead extends React.Component<IDataTableHeadProps> {
-  render() {
+  render = () => {
     return (
       <TableHead>
         <TableRow>
-          {!this.props.fetching && this.props.items.length > 0 /** only show the fields after fetching data from server completed */ && (
+          {!this.props.fetching && this.props.items.length > 0 && (
             <>
               {this.props.fields.map((field: string) => {
                 return (
@@ -25,7 +25,7 @@ class DataTableHead extends React.Component<IDataTableHeadProps> {
         </TableRow>
       </TableHead>
     );
-  }
+  };
 }
 
 export default DataTableHead;
