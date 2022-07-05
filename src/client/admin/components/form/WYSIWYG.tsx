@@ -2,7 +2,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { StyledComponentProps, withStyles } from '@material-ui/core';
 import React from 'react';
-import { FieldItem, IReduxFormProps } from '../../../../../@types/client/admin/form';
+import { FieldItem, IReduxFormProps } from '../../types/form';
 import { adminApiURL } from '../../../resources/strings/apiURL';
 
 class WYSIWYG extends React.Component<IReduxFormProps & FieldItem & StyledComponentProps> {

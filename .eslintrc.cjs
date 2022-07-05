@@ -5,7 +5,7 @@ module.exports = {
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
   overrides: [
     {
-      files: ['*.tsx', '*.jsx'],
+      files: ['*.tsx', '*.jsx', '*.ts'],
       rules: {
         '@typescript-eslint/ban-types': [
           'error',

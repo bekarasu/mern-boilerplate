@@ -1,9 +1,9 @@
-import { IBaseAdminService } from '../../../../@types/server/services/Admin/IBaseAdminService';
-import AbstractRepository from '../../database/repositories/AbstractRepository';
+import { IBaseAdminService } from '../../types/services/Admin/IBaseAdminService';
+import MongoRepository from '../../database/repositories/MongoRepository';
 import { Document } from 'mongoose';
 
 export default abstract class BaseService<T extends Document> implements IBaseAdminService<T> {
-  protected abstract repository: AbstractRepository<T>;
+  protected abstract repository: MongoRepository<T>;
 
   isExists = async (where: object): Promise<boolean> => this.repository.isExists(where);
 

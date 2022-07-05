@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 export const notFoundHandler = (request: Request, response: Response) => {
   const message = 'Service not found';
 

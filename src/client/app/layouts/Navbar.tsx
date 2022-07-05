@@ -10,10 +10,7 @@ export default class Navbar extends React.Component {
       <BootstrapNavbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Link to="/" className="nav-link">
-            Anasayfa
-          </Link>
-          <Link to="/about-us" className="nav-link">
-            Hakkımızda
+            Homepage
           </Link>
         </Nav>
       </BootstrapNavbar.Collapse>

@@ -1,7 +1,7 @@
 import { FormControl, MenuItem } from '@material-ui/core';
 import React from 'react';
 import { Field } from 'redux-form';
-import { IFormFieldLoaderProps } from '../../../../../@types/client/admin/components';
+import { IFormFieldLoaderProps } from '../../types/components';
 import { trans } from '../../../../shared/resources/lang/translate';
 import CustomSwitch from './CustomSwitch';
 import CustomTextInput from './CustomTextInput';
@@ -14,9 +14,13 @@ class FormFieldLoader extends React.Component<IFormFieldLoaderProps> {
     let component = null;
     let children = null;
 
-    switch (this.props.item.type) {
+    const { item, style } = this.props;
+    const isHidden = item.type === 'hidden';
+
+    switch (item.type) {
       case 'text':
       case 'number':
+      case 'hidden':
         component = CustomTextInput;
         break;
       case 'wysiwyg':
@@ -30,7 +34,7 @@ class FormFieldLoader extends React.Component<IFormFieldLoaderProps> {
         break;
       case 'select': // don't use default rendering
         component = SelectField;
-        children = this.props.item.options.map((option, key) => {
+        children = item.options.map((option, key) => {
           return (
             <MenuItem key={key} value={option.value}>
               {option.text}
@@ -39,18 +43,20 @@ class FormFieldLoader extends React.Component<IFormFieldLoaderProps> {
         });
         break;
       default:
-        component = 'Invalid Field Type: ' + this.props.item.type;
+        component = 'Invalid Field Type: ' + item.type;
         break;
     }
 
+    let label = null;
+    if (!isHidden) {
+      label = item.label ? trans('db.' + item.label) : trans('db.' + item.name);
+    } else {
+      style.display = 'none';
+    }
+
     return (
-      <FormControl style={this.props.style}>
-        <Field
-          name={this.props.item.name}
-          label={this.props.item.label ? trans('db.' + this.props.item.label) : trans('db.' + this.props.item.name)}
-          component={component}
-          {...this.props.item}
-        >
+      <FormControl style={style}>
+        <Field hidden={isHidden} name={item.name} label={label || undefined} component={component} {...item}>
           {children !== null && children}
         </Field>
       </FormControl>

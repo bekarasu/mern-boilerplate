@@ -4,13 +4,13 @@ import { Helmet } from 'react-helmet';
 import { Redirect } from 'react-router-dom';
 import { reduxForm } from 'redux-form';
 import { store } from '..';
-import { ICreatePageState, ICrudPageProps } from '../../../../@types/client/admin/pages';
+import { ICreatePageState, ICrudPageProps } from '../types/pages';
 import { trans } from '../../../shared/resources/lang/translate';
 import { jsonToFormData } from '../../resources/helpers/form';
 import CustomForm from '../components/form/CustomForm';
 import ResultMessageBox from '../components/form/ResultMessageBox';
 import ApiRequest from '../libraries/ApiRequest';
-import { showServerResult } from '../store/result/actions';
+import { showServerResultMessage } from '../store/result/actions';
 
 class CreateFormFooter extends React.Component {
   render = () => {
@@ -37,8 +37,8 @@ class CreateFormFooter extends React.Component {
 }
 
 const CreateForm = (props) => {
-  const { handleSubmit, items } = props;
-  return <CustomForm footerComponent={<CreateFormFooter />} handleSubmit={handleSubmit} items={items} />;
+  const { handleSubmit, items, urlFromField } = props;
+  return <CustomForm footerComponent={<CreateFormFooter />} handleSubmit={handleSubmit} items={items} urlFromField={urlFromField} />;
 };
 
 const CreateFormRedux: any = reduxForm({ form: 'createForm' })(CreateForm);
@@ -50,6 +50,7 @@ class CreatePage extends React.Component<ICrudPageProps, ICreatePageState> {
       items: [],
       redirectURL: null, // TODO make this redirecting global using redux.
       fetching: true,
+      urlFromField: undefined,
     };
   }
 
@@ -69,14 +70,13 @@ class CreatePage extends React.Component<ICrudPageProps, ICreatePageState> {
     const requester = new ApiRequest();
     const fd = jsonToFormData(values);
     requester.post(this.state.resource, fd).then((res: any) => {
-      // show the messages by server status code
       if (res.status === 200) {
-        store.dispatch(showServerResult('success', res.data.message));
-        this.setState({ redirectURL: '/' + this.state.resource + '/list' }); // redirect if the request is success
+        store.dispatch(showServerResultMessage('success', res.data.message));
+        this.setState({ redirectURL: '/' + this.state.resource + '/list' });
       } else if (res.status >= 400 && res.status <= 499) {
-        store.dispatch(showServerResult('warning', res.data.message));
+        store.dispatch(showServerResultMessage('warning', res.data.message));
       } else if (res.status >= 500) {
-        store.dispatch(showServerResult('error', res.data.message));
+        store.dispatch(showServerResultMessage('error', res.data.message));
       }
     });
   };
@@ -96,7 +96,7 @@ class CreatePage extends React.Component<ICrudPageProps, ICreatePageState> {
                   <title>{this.state.title}</title>
                 </Helmet>
                 <ResultMessageBox />
-                <CreateFormRedux onSubmit={this.submit} items={this.state.items} />
+                <CreateFormRedux onSubmit={this.submit} items={this.state.items} urlFromField={this.state.urlFromField} />
               </>
             )}
           </>

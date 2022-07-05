@@ -2,9 +2,9 @@ import { FormEvent } from 'react';
 import { Message } from './redux';
 
 export interface FieldItem {
-  label?: string;
-  type: 'number' | 'text' | 'switch' | 'image' | 'wysiwyg' | 'select';
+  type: 'number' | 'text' | 'switch' | 'image' | 'wysiwyg' | 'select' | 'hidden';
   name: string;
+  label?: string;
   options?: Array<{ value: string | number; text: string }>;
   required?: boolean;
   initialValue?: string | null | number | boolean;
@@ -29,6 +29,7 @@ export interface ICustomFormProps {
   items: Array<FieldItem>;
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
   footerComponent?: unknown;
+  urlFromField?: string;
 }
 
 export type ListAction = 'edit' | 'delete' | 'show';
@@ -62,6 +63,6 @@ export interface IResourceGetRequestParams {
   search?: string;
 }
 
-interface IReduxFormProps {
+export interface IReduxFormProps {
   input?: { onChange: (value: string | number | boolean | FileList) => void };
 }

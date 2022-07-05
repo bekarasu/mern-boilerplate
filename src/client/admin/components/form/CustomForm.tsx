@@ -1,6 +1,6 @@
 import { Grid } from '@material-ui/core';
 import React from 'react';
-import { FieldItem, ICustomFormProps } from '../../../../../@types/client/admin/form';
+import { FieldItem, ICustomFormProps } from '../../types/form';
 import FormFieldLoader from './FormFieldLoader';
 
 class CustomForm extends React.Component<ICustomFormProps> {
@@ -13,14 +13,25 @@ class CustomForm extends React.Component<ICustomFormProps> {
     const fieldStyle: React.CSSProperties = {
       margin: '10px 0',
     };
-    const { footerComponent, items, handleSubmit } = this.props;
+    const { footerComponent, items, handleSubmit, urlFromField } = this.props;
+    console.log(urlFromField);
 
     return (
       <form style={formStyle} onSubmit={handleSubmit}>
-        {items.map((item: FieldItem) => {
-          // render the form input fields
-          return <FormFieldLoader style={fieldStyle} key={item.name} item={item} />;
-        })}
+        {items.map((item: FieldItem) => (
+          <FormFieldLoader style={fieldStyle} key={item.name} item={item} />
+        ))}
+        {urlFromField != null && (
+          <FormFieldLoader
+            key={'urlFromField'}
+            style={{}}
+            item={{
+              type: 'hidden',
+              name: 'urlFromField',
+              initialValue: urlFromField,
+            }}
+          />
+        )}
         {footerComponent != null && (
           <Grid container direction="row" justifyContent="space-between" alignContent="center" style={fieldStyle}>
             {footerComponent}

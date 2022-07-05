@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ISidebarProps, ISidebarState } from '../../../../@types/client/admin/layouts';
+import { ISidebarProps, ISidebarState } from '../types/layouts';
 import { trans } from '../../../shared/resources/lang/translate';
 import NestedList from '../components/NestedList';
 import ApiRequest from '../libraries/ApiRequest';
+const requester = new ApiRequest();
 
 class Sidebar extends React.Component<ISidebarProps, ISidebarState> {
   constructor(props) {
@@ -13,11 +14,15 @@ class Sidebar extends React.Component<ISidebarProps, ISidebarState> {
     };
   }
 
-  componentDidMount = () => {
-    const requester = new ApiRequest();
-    requester.get('admin-menu').then((res: any) => {
-      this.setState({ listItems: res.data.data });
-    });
+  componentDidMount = async () => {
+    let res;
+    try {
+      res = await requester.get('admin-menu');
+    } catch (err) {
+      console.log(err);
+    }
+
+    this.setState({ listItems: res.data.data });
   };
 
   render = () => (
@@ -28,10 +33,8 @@ class Sidebar extends React.Component<ISidebarProps, ISidebarState> {
   );
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    user: state.auth.user,
-  };
-};
+const mapStateToProps = (state: any) => ({
+  user: state.auth.user,
+});
 
 export default connect(mapStateToProps)(Sidebar);

@@ -5,11 +5,12 @@ import '../../../../libraries/ApiResponse';
 import { AdminMenu } from '../../../../models/AdminMenu';
 
 class AdminMenuController {
-  async getList(req: Request, res: Response) {
+  getList = async (req: Request, res: Response) => {
     const service = new AdminMenuRepository(AdminMenu);
     const adminMenuDocuments = await service.findAll();
     const sidebarItems = treeAdminMenu(adminMenuDocuments);
     res.setMessage('').customResponse(sidebarItems);
-  }
+  };
 }
+
 export default new AdminMenuController();

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, RouteComponentProps } from 'react-router-dom';
-import { IResourceRoute } from '../../../../@types/client/admin/components';
+import { IResourceRoute } from '../types/components';
 import CreatePage from '../pages/CreatePage';
 import ListPage from '../pages/ListPage';
 import UpdatePage from './../pages/UpdatePage';

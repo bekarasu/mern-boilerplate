@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import React from 'react';
-import { ISliderButtonProps, ISliderButtonState } from '../../../../@types/client/admin/components';
+import { ISliderButtonProps, ISliderButtonState } from '../types/components';
 
 class SliderButton extends React.Component<ISliderButtonProps, ISliderButtonState> {
   constructor(props) {
@@ -34,7 +34,6 @@ class SliderButton extends React.Component<ISliderButtonProps, ISliderButtonStat
             </Button>,
           );
           break;
-        // navigating buttons
         case this.state.activeButton + 1:
         case this.state.activeButton - 1:
         case this.props.buttonCount:
@@ -60,7 +59,7 @@ class SliderButton extends React.Component<ISliderButtonProps, ISliderButtonStat
             >
               ...
             </Button>,
-          ); //
+          );
           break;
         default:
           // don't need other buttons

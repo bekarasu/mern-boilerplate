@@ -2,14 +2,15 @@ import { Paper, Snackbar, Table, TableContainer } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import React from 'react';
 import { connect } from 'react-redux';
-import { IDataTableProps, IDataTableState } from '../../../../@types/client/admin/components';
-import { IFilter } from '../../../../@types/client/admin/form';
+import { IDataTableProps, IDataTableState } from '../types/components';
+import { IFilter } from '../types/form';
 import ApiRequest from '../libraries/ApiRequest';
 import DataTableBody from './DataTable/DataTableBody';
 import DataTableFooter from './DataTable/DataTableFooter';
 import DataTableHead from './DataTable/DataTableHead';
 import Filter from './Filter';
 const requester = new ApiRequest();
+
 class DataTable extends React.Component<IDataTableProps, IDataTableState> {
   constructor(props: IDataTableProps) {
     super(props);
@@ -50,17 +51,15 @@ class DataTable extends React.Component<IDataTableProps, IDataTableState> {
 
   componentDidUpdate = (prevProps: IDataTableProps) => {
     if (prevProps.resourceURL !== this.props.resourceURL || prevProps.filters.fields !== this.props.filters.fields) {
-      // check these for preventing unnecessary data getting
       if (this.props.filters.fields !== null) {
         const newParams = this.state.requestParams;
-        newParams.start = 0; // if the filter is set, reset the page state
+        newParams.start = 0;
         this.setState({ requestParams: newParams, currentPage: 1 });
-        let search = ''; // request search param
+        let search = '';
         this.props.filters.fields.map((filter: IFilter, index: number) => {
-          // convert the server compatible query
           search += filter.name + '=' + filter.value;
           if (this.props.filters.fields.length !== 1 && index < this.props.filters.fields.length - 1) {
-            search += ','; // seperate the fields
+            search += ',';
           }
         });
         const requestParams = this.state.requestParams;
@@ -95,8 +94,6 @@ class DataTable extends React.Component<IDataTableProps, IDataTableState> {
 
   render = () => {
     const { currentPage, fetching, dataCount, items, requestParams, deleteResult } = this.state;
-
-    console.log(items, fetching, dataCount);
 
     return (
       <>

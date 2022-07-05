@@ -6,7 +6,7 @@ Additional integrations are provided:
 
 - Typescript
 - Docker
-- Server Side Rendering for User App side
+- Server Side Rendering for User App
 - React Router
 - React Redux
 - ESLint
@@ -15,7 +15,7 @@ Additional integrations are provided:
 Some extra features:
 
 - Theme Supported Admin Panel (CMS)
-- Entry Level Secured API and Error Logging
+- Material Admin Panel
 - Multi Language Support
 
 ## Installation
@@ -23,7 +23,7 @@ Some extra features:
 1. Install all dependencies
 
    ```shellscript
-   npm install
+      npm install
    ```
 
 1. For development environment, we use some npm packages globally that helps the development:
@@ -37,5 +37,5 @@ Some extra features:
 You can easily start the web app. Start the listeners
 
 ```shellscript
-npm run dev
+   npm run dev
 ```

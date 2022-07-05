@@ -7,6 +7,7 @@ import { appApiRouter } from './routes/app/api';
 import { appWebRouter } from './routes/app/web';
 import { config } from './config/config';
 import { Mongoose } from 'mongoose';
+import 'source-map-support/register';
 
 if (!config.port) {
   throw new Error('Port Not Defined or Invalid');

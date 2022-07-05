@@ -1,7 +1,7 @@
 import { StyledComponentProps, withStyles } from '@material-ui/core';
 import React from 'react';
-import { IReduxFormProps } from '../../../../../@types/client/admin/form';
-import { ITheme } from '../../../../../@types/client/admin/theme';
+import { IReduxFormProps } from '../../types/form';
+import { ITheme } from '../../types/theme';
 
 class ImageUploader extends React.Component<IReduxFormProps & StyledComponentProps> {
   fileObj = [];

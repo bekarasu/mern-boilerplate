@@ -1,4 +1,4 @@
-import { Language } from '../../../../@types/shared/Lang';
+import { Language } from '../../types/Lang';
 
 export const localeTR: Language = {
   forms: {
@@ -31,15 +31,18 @@ export const localeTR: Language = {
   },
   db: {
     name: 'Adı',
-    price: 'Fiyatı',
-    sku: 'Stok Kodu',
     createdAt: 'Oluşturulma Tarihi',
     updatedAt: 'Güncellenme Tarihi',
     images: 'Resimler',
     status: 'Durum',
+    title: 'Başlık',
+    count: 'Adet',
   },
   models: {
-    logs: 'Kayıt',
     app: 'Uygulama',
+    playground: 'Playground',
+  },
+  panel: {
+    dashboard: 'Dashboard',
   },
 };

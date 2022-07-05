@@ -3,7 +3,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router-dom';
 import { reduxForm } from 'redux-form';
-import { IUpdatePageProps, IUpdatePageState } from '../../../../@types/client/admin/pages';
+import { IUpdatePageProps, IUpdatePageState } from '../types/pages';
 import { trans } from '../../../shared/resources/lang/translate';
 import { jsonToFormData } from '../../resources/helpers/form';
 import CustomForm from '../components/form/CustomForm';
@@ -15,6 +15,7 @@ class UpdateFormFooter extends React.Component {
       marginLeft: 'auto',
       marginTop: '10px',
     };
+
     return (
       <>
         <Button type="submit" style={submitStyle} variant="contained" color="primary">
@@ -42,6 +43,7 @@ class UpdatePage extends React.Component<IUpdatePageProps & RouteComponentProps<
       items: this.props.items,
     };
   }
+
   componentDidMount = () => {
     const requester = new ApiRequest();
     requester.get(this.props.serverResource + '/' + this.props.match.params.id + '/edit').then((res: any) => {
@@ -49,18 +51,20 @@ class UpdatePage extends React.Component<IUpdatePageProps & RouteComponentProps<
       this.setState({ fetching: false, ...data });
     });
   };
+
   submit = (values: object) => {
     const requester = new ApiRequest();
     const fd = jsonToFormData(values);
     requester.put(this.state.resource + '/' + this.props.match.params.id, fd);
   };
+
   render = () => {
     return (
       <>
         <Helmet>
           <title>{trans('resource.update', { item: this.state.title })}</title>
         </Helmet>
-        {this.state.fetching ? <p>Yükleniyor... </p> : <UpdateFormRedux onSubmit={this.submit.bind(this)} items={this.state.items} />}
+        {this.state.fetching ? <p>Loading... </p> : <UpdateFormRedux onSubmit={this.submit.bind(this)} items={this.state.items} />}
       </>
     );
   };

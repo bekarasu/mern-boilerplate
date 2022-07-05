@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import { Document } from 'mongoose';
-import { IFieldItem } from '../../../../../../@types/server/admin/Form/IFieldItem';
-import { IFormProperties } from '../../../../../../@types/server/admin/PageProperties/IFormProperties';
-import { IGridProperties } from '../../../../../../@types/server/admin/PageProperties/IGridProperties';
-import { IShowProperties } from '../../../../../../@types/server/admin/PageProperties/IShowProperties';
-import { IBaseAdminService } from '../../../../../../@types/server/services/Admin/IBaseAdminService';
+import { IFieldItem } from '../../../../types/admin/Form/IFieldItem';
+import { IFormProperties } from '../../../../types/admin/PageProperties/IFormProperties';
+import { IGridProperties } from '../../../../types/admin/PageProperties/IGridProperties';
+import { IShowProperties } from '../../../../types/admin/PageProperties/IShowProperties';
+import { IBaseAdminService } from '../../../../types/services/Admin/IBaseAdminService';
 import HttpException from '../../../../exceptions/api/HTTPException';
 import { toURLConverter } from '../../../../helpers/route';
 
@@ -32,7 +32,7 @@ abstract class ResourceController {
       const data = await this.service.list(where, fields, limit, offset);
       res.setMessage('Records Fetched').customResponse({ items: data, total: count });
     } catch (e) {
-      next(e); // if you take an error, pass the function and go to middleware
+      next(e);
     }
   };
 
@@ -44,7 +44,7 @@ abstract class ResourceController {
       }
       res.setMessage('Record Fetched').customResponse(item);
     } catch (e) {
-      next(e); // if you take an error, pass the function and go to middleware
+      next(e);
     }
   };
 
@@ -58,15 +58,31 @@ abstract class ResourceController {
           validation: validation,
         });
       }
-      req.body.slug = req.body.slug ? toURLConverter(req.body.slug) : toURLConverter(req.body.name); // TODO check this with different model that slug doesnt exists.
-      const document = req.body;
-      if (typeof req.files != 'undefined') {
+
+      const reqBody = req.body;
+      if (reqBody.urlFromField) {
+        if (reqBody[reqBody.urlFromField]) {
+          reqBody.slug = toURLConverter(reqBody[reqBody.urlFromField]);
+        }
+
+        delete reqBody.urlFromField;
+      }
+
+      const document = reqBody;
+
+      if (req.files && req.files.length > 0) {
         document.images = this.processImages(req);
         if (document.images.length === 0) {
           delete document.images;
         }
       }
-      await this.service.create(document);
+
+      try {
+        await this.service.create(document);
+      } catch (err) {
+        throw new HttpException(500, 'Error Occured');
+      }
+
       res.setMessage('Record Added').customResponse(document);
     } catch (e) {
       next(e);
@@ -169,7 +185,7 @@ abstract class ResourceController {
   /**
    * convert the "where" param in url query to compatible for mongoose where query
    */
-  private whereStringToObject(where: string): object {
+  private whereStringToObject = (where: string): object => {
     const whereObject = {};
     const whereFields = where.split(','); // split the query by ','
     if (whereFields.length > 1) {
@@ -185,7 +201,7 @@ abstract class ResourceController {
       whereObject[condition[0]] = condition[1];
     }
     return whereObject;
-  }
+  };
 
   abstract grid(): IGridProperties;
 
@@ -193,16 +209,12 @@ abstract class ResourceController {
 
   abstract show(): IShowProperties;
 
-  /**
-   * TODO make a structure that can impelemetable
-   * @param method
-   */
-  abstract validate(method: string): Array<any>;
-  /**
-   * TODO make a structure that can impelemetable
-   * @param request
-   */
-  abstract processImages(request: Request): Array<any>;
+  validate = (method: string): Array<{}> => {
+    throw new Error('Method not implemented.');
+  };
+  processImages = (request: Request): Array<{}> => {
+    throw new Error('Method not implemented.');
+  };
 }
 
 export default ResourceController;

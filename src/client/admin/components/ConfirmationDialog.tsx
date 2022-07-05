@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import React from 'react';
-import { IConfirmationDialogProps } from '../../../../@types/client/admin/components';
+import { IConfirmationDialogProps } from '../types/components';
 
 class ConfirmationDialog extends React.Component<IConfirmationDialogProps> {
   render = () => {

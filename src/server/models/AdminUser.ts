@@ -1,13 +1,5 @@
-import mongoose, { Schema, Document } from 'mongoose';
-
-// useful for sql actions
-export interface AdminUserModel extends Document {
-  name: string;
-  username: string;
-  password: string;
-  status: boolean;
-  avatar?: string;
-}
+import mongoose, { Schema } from 'mongoose';
+import { IAdminUser } from '../types/models/AdminUser';
 
 const AdminUserSchema = new Schema({
   name: {
@@ -28,4 +20,5 @@ const AdminUserSchema = new Schema({
   },
   avatar: String,
 });
-export const AdminUser = mongoose.model<AdminUserModel>('AdminUser', AdminUserSchema, 'adminUsers');
+
+export const AdminUser = mongoose.model<IAdminUser>('AdminUser', AdminUserSchema, 'adminUsers');

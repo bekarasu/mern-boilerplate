@@ -1,5 +1,5 @@
 import path from 'path';
-import { IConfigFileSystem } from '../../../@types/server/IConfigFileSystem';
+import { IConfigFileSystem } from '../types/IConfigFileSystem';
 
 export const fileSystem: IConfigFileSystem = {
   assetUrl: '/static',

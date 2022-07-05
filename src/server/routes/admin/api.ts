@@ -1,3 +1,4 @@
+import { generateResourceRouteGroup } from './../../helpers/routeServer';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
@@ -9,6 +10,7 @@ import HttpException from '../../exceptions/api/HTTPException';
 import AdminMenuController from '../../http/controllers/admin/api/AdminMenuController';
 import AuthController from '../../http/controllers/admin/api/AuthController';
 import FileController from '../../http/controllers/admin/api/FileController';
+import PlaygroundController from '../../http/controllers/admin/api/PlaygroundController';
 import { Auth } from '../../http/middlewares/api/admin_auth.middleware';
 import { errorHandler } from '../../http/middlewares/api/error.middleware';
 import { notFoundHandler } from '../../http/middlewares/api/notFound.middleware';
@@ -18,17 +20,17 @@ import '../../libraries/ApiResponse';
 export const adminApiRouter = express.Router();
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: (req, file, cb) => {
     cb(null, path.join(fileSystem.imagesPath, 'uploads'));
   },
-  filename: function (req, file, cb) {
+  filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname)); //Appending extension
   },
 });
 
 const upload = multer({
   storage: storage,
-  fileFilter(req, file, cb) {
+  fileFilter: (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
     if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
       cb(
@@ -55,6 +57,8 @@ adminApiRouter.use(Auth);
 adminApiRouter.route('/uploadFile').post(upload.any(), FileController.uploadFile);
 
 adminApiRouter.route('/admin-menu').get(AdminMenuController.getList);
+
+generateResourceRouteGroup(adminApiRouter, 'playground', PlaygroundController, upload);
 
 adminApiRouter.use(errorHandler);
 adminApiRouter.use(notFoundHandler);

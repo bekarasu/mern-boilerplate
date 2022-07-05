@@ -1,14 +1,5 @@
-import mongoose, { Schema, Document } from 'mongoose';
-
-// useful for sql actions
-export interface UserModel extends Document {
-  name: string;
-  surname: string;
-  email: string;
-  password: string;
-  created_at: Date;
-  deleted_at?: Date;
-}
+import mongoose, { Schema } from 'mongoose';
+import { IUser } from '../types/models/User';
 
 const UserSchema = new Schema({
   name: {
@@ -42,4 +33,5 @@ const UserSchema = new Schema({
     unique: true,
   },
 });
-export const User = mongoose.model<UserModel>('User', UserSchema);
+
+export const User = mongoose.model<IUser>('User', UserSchema);

@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { store } from '..';
-import { ILoginPageState } from '../../../../@types/client/admin/pages';
+import { ILoginPageState } from '../types/pages';
 import { trans } from '../../../shared/resources/lang/translate';
 import { adminApiURL } from '../../resources/strings/apiURL';
 import { login } from '../store/authenticate/actions';
@@ -45,11 +45,9 @@ class LoginPage extends React.Component<{}, ILoginPageState> {
   };
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    user: state.auth.user,
-  };
-};
+const mapStateToProps = (state: any) => ({
+  user: state.auth.user,
+});
 
 const StyledButton = withStyles({
   root: {

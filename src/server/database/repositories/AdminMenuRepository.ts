@@ -1,4 +1,4 @@
-import { AdminMenuDocument } from '../../../../@types/server/documents/AdminMenuDocument';
-import AbstractRepository from './AbstractRepository';
+import { IAdminMenu } from '../../types/models/AdminMenu';
+import MongoRepository from './MongoRepository';
 
-export default class AdminMenuRepository extends AbstractRepository<AdminMenuDocument> {}
+export default class AdminMenuRepository extends MongoRepository<IAdminMenu> {}

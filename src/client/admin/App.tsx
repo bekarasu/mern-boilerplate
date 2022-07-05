@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { store } from '.';
-import { IPanelUser } from './../../../@types/client/admin/user.d';
+import { IPanelUser } from './types/user';
 import ApiRequest from './libraries/ApiRequest';
 import Authenticated from './pages/Authenticated';
 import LoginPage from './pages/LoginPage';

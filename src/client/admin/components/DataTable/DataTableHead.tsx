@@ -1,6 +1,6 @@
 import { TableHead, TableRow, TableCell } from '@material-ui/core';
 import React from 'react';
-import { IDataTableHeadProps } from '../../../../../@types/client/admin/components';
+import { IDataTableHeadProps } from '../../types/components';
 import { trans } from '../../../../shared/resources/lang/translate';
 
 class DataTableHead extends React.Component<IDataTableHeadProps> {

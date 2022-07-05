@@ -1,4 +1,4 @@
-import { AdminUserModel } from '../../models/AdminUser';
-import AbstractRepository from './AbstractRepository';
+import { IAdminUser } from '../../types/models/AdminUser';
+import MongoRepository from './MongoRepository';
 
-export default class AdminUserRepository extends AbstractRepository<AdminUserModel> {}
+export default class AdminUserRepository extends MongoRepository<IAdminUser> {}

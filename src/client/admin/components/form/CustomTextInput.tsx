@@ -1,6 +1,6 @@
 import { TextField, TextFieldProps } from '@material-ui/core';
 import React from 'react';
-import { FieldItem, IFieldItemState, IReduxFormProps } from '../../../../../@types/client/admin/form';
+import { FieldItem, IFieldItemState, IReduxFormProps } from '../../types/form';
 
 class CustomTextInput extends React.Component<TextFieldProps & IReduxFormProps & FieldItem, IFieldItemState> {
   constructor(props: TextFieldProps & IReduxFormProps & FieldItem) {

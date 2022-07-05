@@ -1,7 +1,7 @@
 import { FieldItem, FilterField, IListActions } from './form';
 import { Message } from './redux';
 import { ITheme } from './theme';
-import { IPanelUser } from './user.d';
+import { IPanelUser } from './user';
 
 export interface IReduxUserProps {
   user: IPanelUser;
@@ -27,26 +27,27 @@ export interface ICrudPageState {
   fetching: boolean;
 }
 
-interface ICreatePageState extends ICrudPageState {
+export interface ICreatePageState extends ICrudPageState {
   redirectURL: string | null; // TODO add this to app-wide system
-  items: Array<FieldItem>; // form input fields
+  items: Array<FieldItem>;
+  urlFromField?: string;
 }
 
-interface IUpdatePageProps extends ICrudPageProps {
-  items: Array<FieldItem>; // form input fields
-  id: string; // id of resource
+export interface IUpdatePageProps extends ICrudPageProps {
+  items: Array<FieldItem>;
+  id: string;
   resource: string;
 }
 
-interface IUpdatePageState extends ICrudPageState {
-  items: Array<FieldItem>; // we will modify this object for setting initial input values. so pass items props to state
+export interface IUpdatePageState extends ICrudPageState {
+  items: Array<FieldItem>;
   fetching: boolean;
 }
 
 export interface IListPageState extends ICrudPageState {
-  fields: Array<string>; // for showing data fields
+  fields: Array<string>;
   actions: IListActions;
-  disableAdd?: boolean; // disables the Add button in list
+  disableAdd?: boolean;
   filterItems?: Array<FilterField>;
 }
 

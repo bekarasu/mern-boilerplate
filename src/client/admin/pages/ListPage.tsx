@@ -3,7 +3,7 @@ import withStyles, { StyledComponentProps } from '@material-ui/core/styles/withS
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { ICrudPageProps, IListPageState } from '../../../../@types/client/admin/pages';
+import { ICrudPageProps, IListPageState } from '../types/pages';
 import { trans } from '../../../shared/resources/lang/translate';
 import ResultMessageBox from '../components/form/ResultMessageBox';
 import ApiRequest from '../libraries/ApiRequest';
@@ -28,7 +28,7 @@ class ListPage extends React.Component<ICrudPageProps & StyledComponentProps & R
     const requester = new ApiRequest();
     let data;
     try {
-      const res = await requester.get(this.props.serverResource + '/list');
+      const res = await requester.get(this.props.serverResource + '/grid');
       data = res.data.data;
     } catch (err) {
       this.setState({ fetching: false });

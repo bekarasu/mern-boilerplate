@@ -3,7 +3,7 @@ import React from 'react';
 import { store } from '..';
 import { trans } from '../../../shared/resources/lang/translate';
 import { logout } from '../store/authenticate/actions';
-import { INavbarProps } from './../../../../@types/client/admin/layouts.d';
+import { INavbarProps } from '../types/layouts';
 import LightThemeIcon from '@material-ui/icons/Brightness7';
 import DarkThemeIcon from '@material-ui/icons/Brightness4';
 import { setTheme } from './../store/theme/actions';
@@ -29,10 +29,8 @@ class Navbar extends React.Component<INavbarProps> {
   };
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    theme: state.theme,
-  };
-};
+const mapStateToProps = (state: any) => ({
+  theme: state.theme,
+});
 
 export default connect(mapStateToProps)(Navbar);

@@ -9,8 +9,8 @@ import Content from '../layouts/Content';
 import Footer from '../layouts/Footer';
 import Navbar from '../layouts/Navbar';
 import Sidebar from '../layouts/Sidebar';
-import { clearResult } from '../store/result/actions';
-import { IAuthenticatedPageProps } from './../../../../@types/client/admin/pages.d';
+import { clearResultMessage } from '../store/result/actions';
+import { IAuthenticatedPageProps } from '../types/pages';
 import { setTheme } from './../store/theme/actions';
 class Authenticated extends React.Component<RouteConfigComponentProps<{}> & IAuthenticatedPageProps> {
   componentDidMount = () => store.dispatch(setTheme(localStorage.getItem('admin:theme') === 'dark' ? 'dark' : 'light'));
@@ -18,7 +18,7 @@ class Authenticated extends React.Component<RouteConfigComponentProps<{}> & IAut
   componentDidUpdate = (prevProps) => {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       if (this.props.result.showed) {
-        store.dispatch(clearResult()); // remove the ResultMessageBox
+        store.dispatch(clearResultMessage());
       }
     }
   };
@@ -51,11 +51,9 @@ class Authenticated extends React.Component<RouteConfigComponentProps<{}> & IAut
   };
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    result: state.result,
-    theme: state.theme,
-  };
-};
+const mapStateToProps = (state: any) => ({
+  result: state.result,
+  theme: state.theme,
+});
 
 export default connect(mapStateToProps)(withRouter(Authenticated));

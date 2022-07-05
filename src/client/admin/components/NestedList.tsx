@@ -3,7 +3,7 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { IMultiLevelState, ISidebarElementProps, IMenuItemProps, INestedListProps } from '../../../../@types/client/admin/components';
+import { IMultiLevelState, ISidebarElementProps, IMenuItemProps, INestedListProps } from '../types/components';
 
 class SingleLevel extends React.Component<ISidebarElementProps> {
   render = () => (
@@ -17,7 +17,7 @@ class MultiLevel extends React.Component<ISidebarElementProps, IMultiLevelState>
   constructor(props: ISidebarElementProps) {
     super(props);
     this.state = {
-      opened: false, // is dropdown opened
+      opened: false,
     };
   }
 
@@ -32,7 +32,7 @@ class MultiLevel extends React.Component<ISidebarElementProps, IMultiLevelState>
       <React.Fragment>
         <ListItem button onClick={this.handleClick.bind(this)} key={this.props.name}>
           <ListItemText primary={this.props.label} />
-          {this.state.opened ? <ExpandLessIcon /> : <ExpandMoreIcon /> /** change the icon according to opened state */}
+          {this.state.opened ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </ListItem>
         <Collapse in={this.state.opened} timeout="auto" unmountOnExit>
           <List style={innerListStyle}>

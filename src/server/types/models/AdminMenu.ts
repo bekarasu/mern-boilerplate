@@ -1,6 +1,8 @@
-import { TranslateParams } from './lang';
+import { Document, Types } from 'mongoose';
+import { TranslateParams } from '../../../shared/types/Lang';
 
-export interface IAdminMenu {
+export interface IAdminMenu extends Document {
+  _id: Types.ObjectId;
   id: string;
   name: string;
   label: IAdminMenuLabel | string;

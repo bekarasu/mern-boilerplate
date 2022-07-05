@@ -1,8 +1,9 @@
 import { blue, orange, purple } from '@material-ui/core/colors';
 import { createTheme } from '@material-ui/core/styles';
-import { SET_THEME } from '../../../../../@types/client/admin/redux';
-import { ITheme, IThemeOptions } from '../../../../../@types/client/admin/theme';
-export function setTheme(theme: 'dark' | 'light') {
+import { SET_THEME } from '../../types/redux';
+import { ITheme, IThemeOptions } from '../../types/theme';
+
+export const setTheme = (theme: 'dark' | 'light') => {
   const muiTheme: ITheme = createTheme({
     spacing: 4,
     palette: {
@@ -24,9 +25,11 @@ export function setTheme(theme: 'dark' | 'light') {
       },
     },
   } as IThemeOptions);
+
   localStorage.setItem('admin:theme', theme);
+
   return {
     type: SET_THEME,
     payload: muiTheme,
   };
-}
+};

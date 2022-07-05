@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { AdminMenuDocument } from '../../../@types/server/documents/AdminMenuDocument';
+import { IAdminMenu } from '../types/models/AdminMenu';
 
 const AdminMenuSchema: mongoose.Schema = new mongoose.Schema({
   id: {
@@ -24,4 +24,4 @@ const AdminMenuSchema: mongoose.Schema = new mongoose.Schema({
   },
 });
 
-export const AdminMenu = mongoose.model<AdminMenuDocument>('AdminMenu', AdminMenuSchema, 'adminMenu');
+export const AdminMenu = mongoose.model<IAdminMenu>('AdminMenu', AdminMenuSchema, 'adminMenu');

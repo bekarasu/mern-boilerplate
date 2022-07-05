@@ -1,4 +1,4 @@
-import { CLEAR_RESULT, Message, ResultTypes, SERVER_RESULT, SET_SHOWED_RESULT } from '../../../../../@types/client/admin/redux';
+import { CLEAR_RESULT, Message, ResultTypes, SERVER_RESULT, SET_SHOWED_RESULT } from '../../types/redux';
 
 const initialState: Message = {
   message: null,
@@ -7,7 +7,7 @@ const initialState: Message = {
   showed: false,
 };
 
-export function resultReducer(state = initialState, action: ResultTypes): Message {
+export const resultReducer = (state = initialState, action: ResultTypes): Message => {
   switch (action.type) {
     case SERVER_RESULT:
     case CLEAR_RESULT:
@@ -16,4 +16,4 @@ export function resultReducer(state = initialState, action: ResultTypes): Messag
     default:
       return state;
   }
-}
+};

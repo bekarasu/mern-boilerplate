@@ -1,4 +1,4 @@
-import { IUser } from '../../shared/User';
+import { IUser } from '../../../shared/types/User';
 import { ISidebarElementProps } from './components';
 import { ITheme } from './theme';
 

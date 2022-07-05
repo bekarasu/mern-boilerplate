@@ -2,7 +2,7 @@ import { Grid, MenuItem, Select, TableCell, TableFooter, TableRow } from '@mater
 import React from 'react';
 import { trans } from '../../../../shared/resources/lang/translate';
 import SliderButton from '../SliderButton';
-import { IDataTableFooterProps } from './../../../../../@types/client/admin/components.d';
+import { IDataTableFooterProps } from '../../types/components';
 
 class DataTableFooter extends React.Component<IDataTableFooterProps> {
   render = () => {

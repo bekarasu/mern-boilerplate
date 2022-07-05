@@ -1,4 +1,3 @@
-// useful for client side
 export interface IUser {
   name: string;
   surname: string;

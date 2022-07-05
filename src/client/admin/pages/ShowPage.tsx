@@ -2,10 +2,10 @@ import { Grid, TextField } from '@material-ui/core';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router-dom';
-import { IUpdatePageProps, IUpdatePageState } from '../../../../@types/client/admin/pages';
+import { IUpdatePageProps, IUpdatePageState } from '../types/pages';
 import { trans } from '../../../shared/resources/lang/translate';
 import ApiRequest from '../libraries/ApiRequest';
-import { FieldItem } from './../../../../@types/client/admin/form.d';
+import { FieldItem } from '../types/form';
 const requester = new ApiRequest();
 
 class ShowPage extends React.Component<IUpdatePageProps & RouteComponentProps<RouteParams>, IUpdatePageState> {

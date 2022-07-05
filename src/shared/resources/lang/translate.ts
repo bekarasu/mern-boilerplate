@@ -1,4 +1,4 @@
-import { LanguageGroup, TranslateParams } from '../../../../@types/shared/Lang';
+import { LanguageGroup, TranslateParams } from '../../types/Lang';
 import app from '../../config/app.json';
 import { localeEN } from './en';
 import { localeTR } from './tr';

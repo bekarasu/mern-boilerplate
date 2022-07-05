@@ -1,4 +1,4 @@
-import { Language } from '../../../../@types/shared/Lang';
+import { Language } from '../../types/Lang';
 
 export const localeEN: Language = {
   forms: {
@@ -30,11 +30,18 @@ export const localeEN: Language = {
   },
   db: {
     name: 'Name',
-    price: 'Price',
-    sku: 'Stock Code',
     createdAt: 'Created Date',
     updatedAt: 'Updated Date',
     images: 'Images',
     status: 'Status',
+    title: 'Title',
+    count: 'Count',
+  },
+  models: {
+    app: 'Application',
+    playground: 'Playground',
+  },
+  panel: {
+    dashboard: 'Dashboard',
   },
 };

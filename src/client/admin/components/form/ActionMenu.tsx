@@ -2,7 +2,7 @@ import { Button, Menu, MenuItem, StyledComponentProps, withStyles } from '@mater
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { IActionMenuProps, IActionMenuState } from '../../../../../@types/client/admin/form';
+import { IActionMenuProps, IActionMenuState } from '../../types/form';
 import { trans } from '../../../../shared/resources/lang/translate';
 import ApiRequest from '../../libraries/ApiRequest';
 import ConfirmationDialog from '../ConfirmationDialog';
@@ -28,7 +28,7 @@ class ActionMenu extends React.Component<IActionMenuProps & StyledComponentProps
     apiRequest.delete(this.props.url).then((res: any) => {
       if (res.status === 200) {
         this.handleDialogClose();
-        this.props.actionResult(true); // snackbar will appear after that
+        this.props.actionResult(true);
       }
     });
   };
@@ -59,17 +59,15 @@ class ActionMenu extends React.Component<IActionMenuProps & StyledComponentProps
           {Object.values(this.props.actions).map((action: string, index: number) => {
             return (
               <MenuItem key={index} style={menuItemStyle}>
-                {action != 'delete' ? ( // add the actions that goes to page.
+                {action != 'delete' ? (
                   <Link style={linkStyle} className={this.props.classes.link} to={'/' + this.props.url + '/' + action}>
                     <Button style={buttonStyle}>{trans('resource.' + action)}</Button>
                   </Link>
                 ) : (
-                  // delete action doesn't have its page so it must be
                   <div style={deleteWrapperStyle}>
                     <Button
                       style={buttonStyle}
                       onClick={() => {
-                        // close the menu and show the confirmation dialog
                         this.handleDialogShow();
                         this.handleClose();
                       }}

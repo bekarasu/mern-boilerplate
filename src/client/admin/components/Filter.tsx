@@ -2,9 +2,9 @@ import { Button, createStyles, Grid, StyledComponentProps, withStyles } from '@m
 import React from 'react';
 import { reduxForm } from 'redux-form';
 import { store } from '..';
-import { IFilterProps, IFilterState } from '../../../../@types/client/admin/components';
-import { IFilter, IFormPostRequestFields } from '../../../../@types/client/admin/form';
-import { ITheme } from '../../../../@types/client/admin/theme';
+import { IFilterProps, IFilterState } from '../types/components';
+import { IFilter, IFormPostRequestFields } from '../types/form';
+import { ITheme } from '../types/theme';
 import { trans } from '../../../shared/resources/lang/translate';
 import { setFilter } from '../store/filter/actions';
 import CustomForm from './form/CustomForm';
@@ -30,7 +30,7 @@ class FilterFormFooter extends React.Component<StyledComponentProps> {
             }}
           >
             {/* TODO localization */}
-            Filtreyi Temizle
+            Clear Filter
           </Button>
         </Grid>
         <Grid>
@@ -51,7 +51,7 @@ const styles = (theme: ITheme) =>
     },
   });
 
-const HOCFilterFormFooter = withStyles(styles)(FilterFormFooter); // themed Filter Footer
+const HOCFilterFormFooter = withStyles(styles)(FilterFormFooter);
 
 const filterForm = (props) => {
   const { handleSubmit, items } = props;
@@ -59,14 +59,14 @@ const filterForm = (props) => {
 };
 
 const FilterFormRedux: any = reduxForm({
-  form: 'filterForm', // a unique name for the form,
+  form: 'filterForm',
 })(filterForm);
 
 class Filter extends React.Component<IFilterProps, IFilterState> {
   constructor(props) {
     super(props);
     this.state = {
-      showFilter: false, // filter form showing
+      showFilter: false,
     };
   }
 
@@ -77,8 +77,8 @@ class Filter extends React.Component<IFilterProps, IFilterState> {
     let count = 0;
     for (const key in requestFields) {
       filters[count] = {
-        name: key, // column name
-        value: requestFields[key], // value that looking for
+        name: key,
+        value: requestFields[key],
       };
       count++;
     }
@@ -99,7 +99,7 @@ class Filter extends React.Component<IFilterProps, IFilterState> {
             }}
           >
             <FilterListIcon />
-            Filtrele
+            Filter
           </Button>
         </Grid>
         {this.state.showFilter && (

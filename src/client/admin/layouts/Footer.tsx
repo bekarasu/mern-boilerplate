@@ -7,7 +7,7 @@ export default class Footer extends React.Component {
       <footer className="z-999">
         <Grid container direction="row">
           <Grid item md={7}>
-            <p>Copyright 2022 © bekarasu.com. Tüm hakları saklıdır</p>
+            <p>Copyright 2022 © bekarasu.com. All rights reserved</p>
           </Grid>
           <Grid item md={5}>
             <p>

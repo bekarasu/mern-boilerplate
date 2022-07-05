@@ -27,18 +27,20 @@ export interface Language {
     fetching: string;
   };
   db: {
-    // db columns
     name: string;
-    price: string;
-    sku: string;
     createdAt: string;
     updatedAt: string;
     images: string;
     status: string;
+    count: string;
+    title: string;
   };
   models?: {
-    logs: string;
     app: string;
+    playground: string;
+  };
+  panel: {
+    dashboard: string;
   };
 }
 

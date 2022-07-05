@@ -2,14 +2,14 @@ import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import { connect } from 'react-redux';
 import { store } from '../..';
-import { IResultMessageBoxProps } from '../../../../../@types/client/admin/form';
-import { setShowedResult } from '../../store/result/actions';
+import { IResultMessageBoxProps } from '../../types/form';
+import { setShowedResultMessage } from '../../store/result/actions';
 
 class ResultMessageBox extends React.Component<IResultMessageBoxProps> {
   componentDidMount = () => {
     if (this.props.result.type != null) {
       /** TODO what is it doing? */
-      store.dispatch(setShowedResult(this.props.result.type, this.props.result.message));
+      store.dispatch(setShowedResultMessage(this.props.result.type, this.props.result.message));
     }
   };
 

@@ -1,5 +1,5 @@
 import { FilterField, IListActions, IResourceGetRequestParams } from './form';
-import { FieldItem } from './form.d';
+import { FieldItem } from './form';
 import { IFilterFields } from './redux';
 
 export interface IFilterProps {
@@ -12,15 +12,15 @@ export interface IFilterState {
 }
 
 export interface IDataTableProps {
-  resourceURL: string; // server fetching data, gets from server
-  fields: Array<string>; // for showing data fields, gets from server
-  actions: IListActions; // Action menu for each row, gets from server
-  filterFields?: Array<FilterField>; // available filter fields, gets from server
-  filters?: IFilterFields; // active filters for fetching data
+  resourceURL: string;
+  fields: Array<string>;
+  actions: IListActions;
+  filterFields?: Array<FilterField>;
+  filters?: IFilterFields;
 }
 
 export interface IDataTableState {
-  items: Array<any>;
+  items: Array<{}>;
   fetching: boolean;
   requestParams: IResourceGetRequestParams;
   deleteResult: string | null;
@@ -29,16 +29,16 @@ export interface IDataTableState {
 }
 
 export interface IDataTableComponentProps extends IDataTableProps {
-  fetching?: boolean; // we pass the fetching state from IDataTableState to this props
+  fetching?: boolean;
 }
 
 export interface IDataTableHeadProps extends IDataTableComponentProps {
-  items: Array<any>;
+  items: Array<{}>;
 }
 
 export interface IDataTableBodyProps extends IDataTableComponentProps {
-  items: Array<any>;
-  actionResult: (result: boolean) => void; // delete result in action menu "delete" button
+  items: Array<{ [key: string]: object | boolean | string | number }>;
+  actionResult: (result: boolean) => void;
 }
 
 export interface IDataTableFooterProps extends IDataTableComponentProps {
@@ -74,7 +74,7 @@ export interface ISliderButtonState {
   activeButton: number;
 }
 
-interface IMenuItemProps {
+export interface IMenuItemProps {
   item: ISidebarElementProps;
 }
 
@@ -89,6 +89,6 @@ export interface ISidebarElementProps {
   children?: Array<ISidebarElementProps>;
 }
 
-interface IMultiLevelState {
+export interface IMultiLevelState {
   opened: boolean;
 }

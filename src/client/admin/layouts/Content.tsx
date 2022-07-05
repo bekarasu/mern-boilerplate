@@ -3,11 +3,10 @@ import React from 'react';
 import { Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import { IReduxUserProps } from '../../../../@types/client/admin/pages';
+import { IReduxUserProps } from '../types/pages';
 import ResourceRoute from '../components/ResourceRoute';
 import Dashboard from '../pages/Dashboard';
 
-// main area of panel, you can define your routes in here, and define your component in this route.
 class Content extends React.Component<IReduxUserProps> {
   render = () => {
     const styles: CSSProperties = {
@@ -17,7 +16,7 @@ class Content extends React.Component<IReduxUserProps> {
     return (
       <>
         <Row style={styles}>
-          <ResourceRoute link="products" />
+          <ResourceRoute link="playground" />
           <Switch>
             <Route path="/dashboard" component={Dashboard} />
           </Switch>

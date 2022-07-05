@@ -1,7 +1,7 @@
 import { TableRow, TableCell, TableBody, withStyles, StyledComponentProps } from '@material-ui/core';
 import React from 'react';
-import { IDataTableBodyProps } from '../../../../../@types/client/admin/components';
-import { ITheme } from '../../../../../@types/client/admin/theme';
+import { IDataTableBodyProps } from '../../types/components';
+import { ITheme } from '../../types/theme';
 import { trans } from '../../../../shared/resources/lang/translate';
 import ActionMenu from '../form/ActionMenu';
 
@@ -18,8 +18,6 @@ class DataTableBody extends React.Component<IDataTableBodyProps & StyledComponen
         ) : this.props.items.length > 0 ? (
           this.props.items.map((item, key) => (
             <TableRow key={key} className={key % 2 === 0 ? this.props.classes.row : null}>
-              {' '}
-              {/** we are theming each even row */}
               <>
                 {this.props.fields.map((field, index) => {
                   return (
