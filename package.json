@@ -18,13 +18,19 @@
     "cli"
   ],
   "scripts": {
-    "watch:build": "npx webpack  -w",
+    "watch:build": "npx webpack -w",
     "watch:server": "nodemon dist/server.js",
     "start": "node dist/server.js",
     "dev": "npm-run-all --parallel watch:*",
     "build": "webpack",
-    "format": "prettier --write .",
-    "lint": "eslint ."
+    "prepare": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint .",
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^24.0.0",
@@ -91,6 +97,8 @@
     "extract-loader": "^5.1.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "faker": "^5.1.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "mini-css-extract-plugin": "^0.11.0",
     "node-sass": "^4.14.1",
     "npm-run-all": "^4.1.5",
